@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Clients & Portfolio — mRS Instruments</title>
+
+  <!-- Roboto only -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :where([hidden]){display:none !important;}
+
+    /* ===== THEME ===== */
+    :root{
+      --primary:#2E6CF6;
+      --bg:#f6f8fb;          /* sleek light canvas */
+      --surface:#ffffff;
+      --text:#0B1320;
+      --text-2:#5b6676;
+      --heading:#0f172a;     /* neutral near-black for headings */
+      --page-pad: clamp(24px, 6vw, 96px);
+      --wrap-max: 1160px;
+      --header-bg:#0a0a0a;
+      --header-h:66px;
+      --border: 1px solid rgba(11,19,32,.08);
+      --shadow-lg: 0 12px 28px rgba(14,25,43,.06);
+    }
+
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font: 400 16px/1.5 Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+    }
+
+    /* ===== HEADER (matches site) ===== */
+    .site-header{
+      position:sticky; top:0; z-index:20;
+      background:var(--header-bg);
+      border-bottom:1px solid rgba(255,255,255,.06);
+      box-shadow:0 4px 14px rgba(0,0,0,.25);
+    }
+    .header-wrap{
+      max-width:var(--wrap-max); margin:0 auto;
+      height:var(--header-h);
+      padding:0 var(--page-pad);
+      display:flex; align-items:center; gap:24px;
+    }
+    .logo{display:flex; align-items:center; gap:10px; text-decoration:none; color:#fff; font-weight:900; letter-spacing:.1px}
+    .logo img{height:30px; display:block}
+    .nav{display:flex; gap:22px; margin-left:8px}
+    .nav a{
+      color:#d7dde6; text-decoration:none; font-weight:700; font-size:14.5px;
+      padding:8px 10px; border-radius:8px;
+    }
+    .nav a:hover{color:#fff; background:rgba(255,255,255,.06)}
+    .nav a.active{color:#fff; background:rgba(255,255,255,.10)}
+    .actions{margin-left:auto; display:flex; align-items:center; gap:10px}
+    .icon-btn{width:38px; height:38px; display:grid; place-items:center; border-radius:10px; color:#cbd5e1; background:transparent; border:1px solid rgba(255,255,255,.12)}
+    .shop-btn{ text-decoration:none; background:var(--primary); color:#fff; padding:10px 14px; border-radius:10px; font-weight:900; font-size:14px; box-shadow:0 6px 20px rgba(46,108,246,.32) }
+
+    /* ===== HERO (light, neutral heading) ===== */
+    .hero{
+      background: linear-gradient(180deg,#ffffff 0%, #f7f9fc 100%);
+      border-bottom: 1px solid rgba(11,19,32,.06);
+      color:var(--text-2);
+    }
+    .hero-wrap{
+      max-width:var(--wrap-max);
+      margin:0 auto;
+      padding: clamp(28px,7vw,70px) var(--page-pad) clamp(18px,4vw,28px);
+    }
+    .hero h1{
+      margin:0 0 10px;
+      color: var(--heading);
+      font: 900 clamp(36px,6.2vw,64px)/1.08 Roboto, system-ui, sans-serif;
+      letter-spacing:-.2px;
+      text-shadow:0 1px 0 rgba(255,255,255,.35);
+    }
+    .hero h1::after{
+      content:"";
+      display:block;
+      width:64px; height:3px; margin-top:12px; border-radius:2px;
+      background: linear-gradient(90deg,#0f172a,#334155);
+      opacity:.55;
+    }
+    .hero p{ margin:0; color:var(--text-2); }
+
+    /* ===== CONTENT WRAPPER ===== */
+    .band{
+      max-width:var(--wrap-max);
+      margin:0 auto;
+      padding: clamp(22px,4vw,32px) var(--page-pad);
+    }
+    .band h2{
+      font: 900 20px/1.2 Roboto, system-ui, sans-serif;
+      margin:0 0 12px; color:var(--heading);
+      letter-spacing:.1px;
+    }
+
+    /* ===== LOGO SLIDER ===== */
+    .slider{
+      position:relative; overflow:hidden;
+      background: var(--surface); border: var(--border);
+      border-radius: 14px; box-shadow: var(--shadow-lg);
+      padding: 14px 0;
+    }
+    .slider::before,
+    .slider::after{
+      content:""; position:absolute; top:0; bottom:0; width:80px; z-index:2; pointer-events:none;
+      background:linear-gradient(to right, var(--surface), transparent);
+    }
+    .slider::after{ right:0; transform:scaleX(-1) }
+    .slider::before{ left:0 }
+
+    .logo-track{
+      display:flex; align-items:center;
+      gap: clamp(28px, 6vw, 72px);
+      will-change: transform;
+      animation: scroll 28s linear infinite;
+    }
+    .slider[data-reverse="true"] .logo-track{ animation-direction: reverse; }
+    .slider:hover .logo-track{ animation-play-state: paused; }
+
+    @keyframes scroll{
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .logo{
+      flex:0 0 auto;
+      height:46px;                /* adjust if desired */
+      filter: grayscale(100%) contrast(92%) brightness(100%);
+      opacity:.9;
+      transition: filter .2s, opacity .2s, transform .2s;
+    }
+    .logo:hover{ filter:none; opacity:1; transform:translateY(-2px) }
+
+    /* ===== FULL-BLEED BLACK STATEMENT ===== */
+    .clients-statement{
+      width:100%;
+      background:#000;                    /* bleed to edges */
+      padding: clamp(48px, 10vw, 120px) 0;
+    }
+    .statement-box{
+      width: min(1080px, 92vw);
+      margin: 0 auto;
+      background: #0b0b0b;                /* subtle contrast to pure black */
+      color: #fff;
+      border: 2px solid #fff;
+      padding: clamp(28px, 3.6vw, 48px) clamp(28px, 5vw, 64px);
+      box-shadow: 0 8px 32px rgba(0,0,0,.45);
+      text-align: left;
+      line-height: 1.8;
+      font-weight: 400;
+    }
+    .statement-box p{
+      margin: 0 0 24px;
+      font-size: clamp(14px, 1.05vw + 12px, 18px);
+    }
+    .statement-box .signature{
+      text-align: center;
+      font-size: 12px;
+      opacity: .9;
+      letter-spacing: .2px;
+      margin-top: 6px;
+    }
+
+    /* ===== FOOTER ===== */
+    footer{
+      border-top:1px solid rgba(11,19,32,.08);
+      color:var(--text-2);
+      padding:24px var(--page-pad) 40px;
+      background:var(--surface);
+    }
+    .foot-wrap{ max-width:var(--wrap-max); margin:0 auto; }
+
+    /* Scale the statement visually without over-shrinking width */
+.statement-box{
+  /* keep it nearly the same width */
+  width: min(1040px, 94vw);                 /* was min(1080px, 92vw) */
+
+  /* slightly tighter padding and border */
+  padding: clamp(20px, 2.6vw, 32px) clamp(24px, 4.2vw, 44px);
+  border: 1.5px solid #fff;                 /* thinner border for a lighter feel */
+
+  /* keep everything feeling more compact */
+  box-shadow: 0 6px 26px rgba(0,0,0,.40);
+}
+
+.statement-box p{
+  /* smaller type + a touch tighter line-height */
+  font-size: clamp(13.5px, 0.9vw + 10px, 16px);   /* was ~14–18px */
+  line-height: 1.7;                               /* was 1.8 */
+}
+
+.statement-box .signature{
+  font-size: 11px;               /* was 12px */
+  margin-top: 4px;               /* was 6px */
+  opacity: .85;
+}
+
+/* Keep client logos in full color (no grayscale) */
+.logo{
+  filter: none !important;
+  opacity: 1 !important;
+  image-rendering: auto;
+  -webkit-filter: none !important;
+}
+
+/* Keep the hover lift, but no color change */
+.logo:hover{
+  transform: translateY(-2px);
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-wrap">
+      <a class="logo" href="index(24).html">
+        <img src="https://mrsinstruments.com/wp-content/uploads/2022/08/logo-mRS-Instruments-300x208.png" alt="mRS Instruments logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'">
+        <span style="display:none">mRS Instruments</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <a href="index(24).html">Home</a>
+        <a href="#">About Us</a>
+        <a href="#">Products ▾</a>
+        <a href="#">Product Applications</a>
+        <a href="portfolio.html" class="active">Portfolio</a>
+        <a href="contact.html" id="contactLink">Contact</a>
+      </nav>
+
+      <div class="actions">
+        <button class="icon-btn" aria-label="Search">⌕</button>
+        <a class="shop-btn" href="#">Shop Now</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-wrap">
+      <h1>Clients &amp; Portfolio</h1>
+      <p>We partner with companies in RF, wireless, research, aerospace, and education worldwide.</p>
+    </div>
+  </section>
+
+  <!-- ===== LOGO SLIDER (row 1) ===== -->
+  <section class="band">
+    <h2>Selected Clients</h2>
+    <div class="slider" aria-label="Client logos (auto scrolling)">
+      <div class="logo-track">
+        <!-- real logos -->
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/csm_569_wimo_e374b8ea75.png" alt="WiMo">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/logo_i_l.jpg" alt="Icom">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/logo_hamradio.png" alt="HAM RADIO">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/amphenolrf-logo-full-color-positive-with-tag.png" alt="Amphenol RF">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/1256px-Airbus_Logo.svg.png" alt="Airbus">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/Solartron-ISA-Ametex.png" alt="Solartron ISA (Ametek)">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/1200px-Cern_Logo_black.svg.png" alt="CERN">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/pfeuffer_logo.jpg" alt="Pfeuffer">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/Logo_for_Imperial_College_London.svg.png" alt="Imperial College London">
+
+        <!-- duplicate for seamless loop -->
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/csm_569_wimo_e374b8ea75.png" alt="" aria-hidden="true">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/logo_i_l.jpg" alt="" aria-hidden="true">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/logo_hamradio.png" alt="" aria-hidden="true">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/amphenolrf-logo-full-color-positive-with-tag.png" alt="" aria-hidden="true">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/1256px-Airbus_Logo.svg.png" alt="" aria-hidden="true">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/Solartron-ISA-Ametex.png" alt="" aria-hidden="true">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/1200px-Cern_Logo_black.svg.png" alt="" aria-hidden="true">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/pfeuffer_logo.jpg" alt="" aria-hidden="true">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/Logo_for_Imperial_College_London.svg.png" alt="" aria-hidden="true">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LOGO SLIDER (row 2, reverse direction) ===== -->
+  <section class="band" style="padding-top:0;">
+    <div class="slider" data-reverse="true" aria-label="Client logos (auto scrolling)">
+      <div class="logo-track">
+        <!-- same logos, shuffled -->
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/1256px-Airbus_Logo.svg.png" alt="Airbus">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/Logo_for_Imperial_College_London.svg.png" alt="Imperial College London">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/1200px-Cern_Logo_black.svg.png" alt="CERN">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/Solartron-ISA-Ametex.png" alt="Solartron ISA (Ametek)">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/csm_569_wimo_e374b8ea75.png" alt="WiMo">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/logo_i_l.jpg" alt="Icom">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/pfeuffer_logo.jpg" alt="Pfeuffer">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/amphenolrf-logo-full-color-positive-with-tag.png" alt="Amphenol RF">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/logo_hamradio.png" alt="HAM RADIO">
+
+        <!-- duplicate for seamless loop -->
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/1256px-Airbus_Logo.svg.png" alt="" aria-hidden="true">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/Logo_for_Imperial_College_London.svg.png" alt="" aria-hidden="true">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/1200px-Cern_Logo_black.svg.png" alt="" aria-hidden="true">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/Solartron-ISA-Ametex.png" alt="" aria-hidden="true">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/csm_569_wimo_e374b8ea75.png" alt="" aria-hidden="true">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/logo_i_l.jpg" alt="" aria-hidden="true">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/pfeuffer_logo.jpg" alt="" aria-hidden="true">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/amphenolrf-logo-full-color-positive-with-tag.png" alt="" aria-hidden="true">
+        <img class="logo" src="https://mrsinstruments.com/wp-content/uploads/2024/06/logo_hamradio.png" alt="" aria-hidden="true">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CLIENTS STATEMENT (full-bleed black with centered box) ===== -->
+  <section class="clients-statement" aria-label="Clients statement">
+    <div class="statement-box">
+      <p>
+        At the heart of our success are our esteemed clients, who include some of the most respected names in academia, industry, and research.
+        We are proud to have partnered with Solatron ISA Ametek, CERN Research Institute, AIRBUS, Imperial College London, Pfeuffer GmbH, and Amphenol.
+        These collaborations underscore our commitment to excellence and innovation in the field of Vector Network Analyzers (VNAs).
+        Our custom VNAs have been pivotal in supporting advanced research and development projects across diverse sectors. By providing tailored solutions
+        that meet the unique needs of each client, we enable groundbreaking discoveries and advancements. Our clients’ trust and confidence in our products
+        drive us to continually push the boundaries of precision and performance.
+      </p>
+      <div class="signature">mRS Instruments</div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="foot-wrap">© 2025 mRS Instruments. All rights reserved.</div>
+  </footer>
+
+  <!-- Perf: pause marquee when tab hidden -->
+  <script>
+    const tracks = document.querySelectorAll('.logo-track');
+    document.addEventListener('visibilitychange', () => {
+      const s = document.hidden ? 'paused' : 'running';
+      tracks.forEach(t => t.style.animationPlayState = s);
+    });
+  </script>
+</body>
+</html>

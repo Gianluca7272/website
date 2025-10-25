@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Applications | mRS Instruments</title>
+
+  <!-- Optional web font; remove if you prefer system fonts only -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary:#b81c22;          /* mRS red */
+      --bg:#F7FAFD;
+      --surface:#ffffff;
+      --text:#0B1320;
+      --muted:#455468;
+      --wrap:1160px;
+      --pad: clamp(20px,6vw,80px);
+      --border: 1px solid color-mix(in oklab, var(--text), transparent 90%);
+    }
+
+    html{scroll-behavior:smooth}
+    body{margin:0; background:var(--bg); color:var(--text); font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+
+    .wrap{max-width:var(--wrap); margin:0 auto; padding:0 var(--pad)}
+
+    /* Hero */
+    .hero{padding:44px 0 18px; background:linear-gradient(180deg,var(--surface),color-mix(in oklab,var(--surface),#000 3%))}
+    .title{margin:0 0 8px; font-weight:800; font-size:36px; letter-spacing:-.2px}
+    .lead{margin:0; color:var(--muted); max-width:72ch}
+
+    /* Cards grid */
+    section.apps{padding:24px 0 60px}
+    .grid{
+      display:grid; gap:16px;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+    }
+    @media (max-width:1000px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
+    @media (max-width:640px){ .grid{grid-template-columns:1fr;} }
+
+    .card{
+      display:flex; flex-direction:column; gap:12px;
+      background:var(--surface); border:var(--border); border-radius:0;
+      padding:16px; box-shadow:0 10px 24px rgba(0,0,0,.08);
+      transition:transform .15s ease, box-shadow .15s ease;
+    }
+    .card:hover{ transform:translateY(-2px); box-shadow:0 16px 36px rgba(0,0,0,.10); }
+
+    .thumb{
+      aspect-ratio: 16 / 9;
+      background:#f2f6fb; border:var(--border); display:grid; place-items:center;
+      font-weight:800; color:var(--muted); letter-spacing:.2px;
+    }
+    .app-name{margin:0; font-size:18px; font-weight:800; letter-spacing:-.2px}
+    .app-desc{margin:0; color:var(--muted); line-height:1.5}
+
+    .meta{display:flex; gap:6px; flex-wrap:wrap}
+    .badge{font-size:12px; font-weight:800; padding:2px 8px; border:1px solid rgba(11,19,32,.12); background:rgba(11,19,32,.06)}
+
+    .cta-row{margin-top:auto; display:flex; gap:10px; align-items:center}
+    .btn{
+      text-decoration:none; display:inline-block; padding:10px 14px; font-weight:800; border-radius:0;
+      border:1px solid rgba(11,19,32,.12); background:rgba(11,19,32,.06); color:var(--text)
+    }
+    .btn.primary{ background:var(--primary); color:#fff; border-color:var(--primary) }
+    .link{color:var(--primary); text-decoration:none}
+    .link:hover{ text-decoration:underline }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <h1 class="title">Applications</h1>
+      <p class="lead">
+        Browse common RF use-cases our VNAs are built for. Each application shows setup notes, example results, and
+        recommended products. Click <strong>Learn more</strong> to dive into a dedicated page.
+      </p>
+    </div>
+  </header>
+
+  <!-- APPLICATIONS GRID -->
+  <section class="apps">
+    <div class="wrap">
+      <div class="grid">
+
+        <!-- 1 -->
+        <article class="card">
+          <div class="thumb">Antenna</div>
+          <div class="meta"><span class="badge">S11</span><span class="badge">Field</span><span class="badge">HF/VHF</span></div>
+          <h2 class="app-name">Antenna tuning &amp; matching</h2>
+          <p class="app-desc">Tune at the feedpoint to remove feedline effects; visualize VSWR/return-loss and Smith chart to converge quickly.</p>
+          <div class="cta-row">
+            <a class="btn primary" href="antenna-tuning.html">Learn more</a>
+            <a class="link" href="products.html#minivna-pro2">Recommended: miniVNA Pro²</a>
+          </div>
+        </article>
+
+        <!-- 2 -->
+        <article class="card">
+          <div class="thumb">Filters</div>
+          <div class="meta"><span class="badge">S21</span><span class="badge">Lab</span></div>
+          <h2 class="app-name">RF filters, traps &amp; duplexers</h2>
+          <p class="app-desc">Measure passband ripple, insertion loss, notch depth, and skirt steepness. Export traces for reports.</p>
+          <div class="cta-row">
+            <a class="btn primary" href="rf-filters.html">Learn more</a>
+            <a class="link" href="products.html#two-port-vna">Recommended: 2-Port VNA</a>
+          </div>
+        </article>
+
+        <!-- 3 -->
+        <article class="card">
+          <div class="thumb">Lines</div>
+          <div class="meta"><span class="badge">S21</span><span class="badge">Lab</span></div>
+          <h2 class="app-name">Transmission lines &amp; baluns</h2>
+          <p class="app-desc">Characterize loss and phase per length, derive velocity factor, and validate balun balance (CMRR).</p>
+          <div class="cta-row">
+            <a class="btn primary" href="transmission-lines.html">Learn more</a>
+            <a class="link" href="products.html#two-port-vna">Recommended: 2-Port VNA</a>
+          </div>
+        </article>
+
+        <!-- 4 -->
+        <article class="card">
+          <div class="thumb">Matching</div>
+          <div class="meta"><span class="badge">S11</span><span class="badge">Lab</span></div>
+          <h2 class="app-name">Impedance matching networks</h2>
+          <p class="app-desc">Design L/π networks and verify with live Smith chart, markers, and limit lines to hit your target Z.</p>
+          <div class="cta-row">
+            <a class="btn primary" href="matching-networks.html">Learn more</a>
+            <a class="link" href="products.html#two-port-vna">Recommended: 2-Port VNA</a>
+          </div>
+        </article>
+
+        <!-- 5 -->
+        <article class="card">
+          <div class="thumb">Cables</div>
+          <div class="meta"><span class="badge">S11</span><span class="badge">Field</span></div>
+          <h2 class="app-name">Cables &amp; connectors QA</h2>
+          <p class="app-desc">Find bad connectors and quantify return-loss; estimate cable length/velocity using phase-slope.</p>
+          <div class="cta-row">
+            <a class="btn primary" href="cables-qa.html">Learn more</a>
+            <a class="link" href="products.html#minivna-pro2">Recommended: miniVNA Pro²</a>
+          </div>
+        </article>
+
+        <!-- 6 -->
+        <article class="card">
+          <div class="thumb">SDR</div>
+          <div class="meta"><span class="badge">S11</span><span class="badge">S21</span><span class="badge">Lab</span></div>
+          <h2 class="app-name">SDR &amp; RF module bring-up</h2>
+          <p class="app-desc">Validate matching, LNAs, and filters on dev boards before layout freeze; export S-parameters for sims.</p>
+          <div class="cta-row">
+            <a class="btn primary" href="sdr-bringup.html">Learn more</a>
+            <a class="link" href="products.html#two-port-vna">Recommended: 2-Port VNA</a>
+          </div>
+        </article>
+
+        <!-- 7 -->
+        <article class="card">
+          <div class="thumb">Materials</div>
+          <div class="meta"><span class="badge">S21</span><span class="badge">Lab</span></div>
+          <h2 class="app-name">Materials &amp; ferrite evaluation</h2>
+          <p class="app-desc">Compare cores, absorbers, and substrates via through-loss and phase change across HF/VHF bands.</p>
+          <div class="cta-row">
+            <a class="btn primary" href="materials-ferrite.html">Learn more</a>
+            <a class="link" href="products.html#two-port-vna">Recommended: 2-Port VNA</a>
+          </div>
+        </article>
+
+        <!-- 8 -->
+        <article class="card">
+          <div class="thumb">Production</div>
+          <div class="meta"><span class="badge">S11/S21</span><span class="badge">QA</span></div>
+          <h2 class="app-name">Production QA / Go-No-Go</h2>
+          <p class="app-desc">Automate acceptance windows with limit lines for fast screening of tuned parts and assemblies.</p>
+          <div class="cta-row">
+            <a class="btn primary" href="production-qa.html">Learn more</a>
+            <a class="link" href="products.html#two-port-vna">Recommended: 2-Port VNA</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

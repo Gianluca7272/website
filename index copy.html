@@ -1,0 +1,2782 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>mRS — Hero + Why + Mission + Product Overview</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :where([hidden]){display:none !important;}
+
+    /* ---------------- THEME TOKENS ---------------- */
+    :root{
+      --primary:#b81c22;        /* mRS red */
+      --blue:#2E6CF6;           /* accent */
+      --cyan:#7BD1FF;
+
+      --bg:#F7FAFD;             /* light background */
+      --surface:#FFFFFF;
+      --text:#0B1320;
+      --text-2:#455468;
+
+      --page-pad: clamp(24px, 6vw, 96px);
+      --wrap-max: 1160px;
+      --visualW: clamp(520px, 46vw, 620px);
+
+      --header-bg:#0a0a0a;
+      --header-h:66px;
+    }
+
+    html{scroll-behavior:smooth}
+    body{margin:0; background:var(--bg); color:var(--text); font-family:Inter,system-ui,sans-serif}
+    body.no-scroll{overflow:hidden}
+
+    /* ---------------- HEADER ---------------- */
+    .site-header{
+      position:sticky; top:0; z-index:20;
+      background:var(--header-bg);
+      border-bottom:1px solid rgba(255,255,255,.06);
+      box-shadow:0 4px 14px rgba(0,0,0,.25);
+    }
+    .header-wrap{
+      max-width:var(--wrap-max); margin:0 auto;
+      height:var(--header-h);
+      padding:0 var(--page-pad);
+      display:flex; align-items:center; gap:24px;
+    }
+    .logo{
+      display:flex; align-items:center; gap:10px; text-decoration:none; color:#fff; font-weight:800;
+      font-family:Sora, Inter, system-ui, sans-serif; letter-spacing:.2px;
+    }
+    .logo img{height:30px; display:block}
+    .nav{display:flex; gap:22px; margin-left:8px}
+    .nav a{
+      color:#d7dde6; text-decoration:none; font-weight:600; font-size:14.5px;
+      padding:8px 10px; border-radius:8px;
+    }
+    .nav a:hover{color:#fff; background:rgba(255,255,255,.06)}
+    .actions{margin-left:auto; display:flex; align-items:center; gap:10px}
+    .icon-btn{
+      width:38px; height:38px; display:grid; place-items:center; border-radius:10px;
+      color:#cbd5e1; background:transparent; border:1px solid rgba(255,255,255,.12);
+    }
+    .shop-btn{
+      text-decoration:none; background:var(--primary); color:#fff;
+      padding:10px 14px; border-radius:10px; font-weight:700; font-size:14px;
+      box-shadow:0 6px 20px rgba(184,28,34,.32);
+    }
+    .hamburger{display:none; width:40px; height:40px; border-radius:10px; border:1px solid rgba(255,255,255,.12); color:#fff; background:transparent}
+    .hamburger svg{display:block}
+    @media (max-width:960px){
+      .nav{
+        display:none;
+        position:absolute; left:0; right:0; top:var(--header-h);
+        background:var(--header-bg);
+        padding:12px var(--page-pad) 18px;
+        border-bottom:1px solid rgba(255,255,255,.06);
+        flex-direction:column; gap:6px;
+      }
+      .site-header.open .nav{display:flex}
+      .hamburger{display:grid; place-items:center}
+    }
+
+    /* ---------------- HERO CORE ---------------- */
+    .hero{
+      position:relative;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      isolation:isolate;
+      background:
+        radial-gradient(1200px 700px at 15% 10%, color-mix(in oklab, var(--blue), transparent 90%), transparent 60%),
+        radial-gradient(1400px 900px at 85% 20%, color-mix(in oklab, var(--cyan), transparent 93%), transparent 65%),
+        var(--bg);
+      /* height supplied by the carousel slide */
+    }
+
+    .sweep-bg{position:absolute; inset:0; z-index:0; pointer-events:none}
+    #trace, #traceGlow{stroke:var(--cyan)}
+    #sweepbar{fill:#ffffff}
+
+    .content{
+      position:relative; z-index:1;
+      width:100%; max-width:var(--wrap-max); margin:0 auto;
+      padding:clamp(24px,5vw,64px) var(--page-pad);
+      display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(16px,4vw,48px); align-items:center;
+    }
+    @media (max-width:960px){ .content{grid-template-columns:1fr; text-align:center} .cta-row{justify-content:center} }
+
+    h1{
+      margin:0 0 12px; font-family:Sora, Inter, system-ui, sans-serif;
+      font-weight:800; line-height:1.05; letter-spacing:-.5px;
+      font-size:clamp(36px, 5.2vw, 58px);
+      color:var(--text);
+    }
+    .sub{margin:40px 0 46px; font-size:clamp(16px,2vw,20px); font-weight:400; color:var(--text-2); max-width:65ch}
+
+    .cta-row{display:flex; gap:12px; flex-wrap:wrap}
+    .btn{
+      appearance:none; border:none; cursor:pointer; display:inline-block; text-decoration:none;
+      padding:14px 20px; border-radius:0; font-weight:600; font-size:16px;
+      transition:transform .15s, box-shadow .15s, background .15s
+    }
+    .btn.primary{background:var(--primary); color:#fff; box-shadow:0 8px 30px rgba(184,28,34,.25)}
+    .btn.primary:hover{transform:translateY(-1px); box-shadow:0 10px 36px rgba(184,28,34,.35)}
+    .btn.ghost{background:rgba(11,19,32,.06); color:var(--text); border:1px solid rgba(11,19,32,.12)}
+    .btn.ghost:hover{background:rgba(11,19,32,.09)}
+    .btn[aria-disabled="true"]{opacity:.5; pointer-events:none}
+
+    .visual-col{display:flex; flex-direction:column; align-items:flex-start}
+    .product-shot{
+      width:var(--visualW); position:relative; aspect-ratio:16/10;
+      background:var(--surface);
+      border:1.5px solid color-mix(in oklab, var(--text), transparent 80%);
+      border-radius:0; overflow:hidden;                /* square corners */
+      box-shadow:0 20px 50px rgba(0,0,0,.12), 0 30px 80px rgba(0,0,0,.08) inset;
+      backdrop-filter:blur(2px);
+    }
+    .product-shot .combo{position:absolute; inset:0; display:grid; grid-template-columns:1fr 1fr}
+    .product-shot .shot{width:100%; height:100%; object-fit:cover; display:block; border-radius:0 !important;}
+    .product-shot .field{object-position:55% 40%}
+    .product-shot .ui{object-position:55% 45%; transform:scale(1.08); transform-origin:center}
+    .product-shot .combo::before{
+      content:""; position:absolute; top:8%; bottom:8%; left:50%;
+      width:1px; transform:translateX(-0.5px);
+      background:linear-gradient(180deg,transparent,color-mix(in oklab, var(--text), transparent 90%),transparent);
+    }
+    .bt-badge{display:none !important}
+    .product-caption{display:none !important;}
+
+    @media(max-width:960px){
+      .content{padding-top:calc(16px + 0px)}
+      .product-shot{width:min(92vw, 680px)}
+      .product-shot .combo{grid-template-columns:1fr; grid-template-rows:1fr 1fr}
+      .product-shot .combo::before{left:8%; right:8%; top:50%; bottom:auto; width:auto; height:2px; transform:translateY(-1px)}
+      .visual-col{align-items:center}
+    }
+
+    /* ===== Hero Carousel (full-width slider) ===== */
+    .hero-carousel{
+      position:relative;
+      overflow:hidden;
+      background:var(--bg);
+      isolation:isolate;
+    }
+    .hero-carousel .track{
+      display:flex;
+      width:100%;
+      will-change:transform;
+      transition:transform .6s cubic-bezier(.22,.61,.36,1);
+    }
+    .hero-carousel .slide{
+      flex:0 0 100%;
+      width:100%;
+      min-height:calc(92vh - var(--header-h)); /* fills viewport beneath sticky header */
+      position:relative;
+    }
+    /* Inner hero sections inherit that height */
+    .hero,
+    .hero-image{ min-height:inherit; }
+
+    /* Slide 2: image banner style */
+    .hero-image{
+      display:grid; place-items:center;
+      background:
+        radial-gradient(1200px 700px at 15% 10%, color-mix(in oklab, var(--blue), transparent 92%), transparent 60%),
+        radial-gradient(1400px 900px at 85% 20%, color-mix(in oklab, var(--cyan), transparent 95%), transparent 65%),
+        var(--bg);
+    }
+    .hero-image .bg{
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover; filter:blur(2px) saturate(1.02) brightness(.9);
+      opacity:.55; pointer-events:none;
+    }
+
+    /* dots */
+    .hc-dots{
+      position:absolute; bottom:18px; left:50%; transform:translateX(-50%);
+      display:flex; gap:8px; z-index:3;
+    }
+    .hc-dot{
+      width:10px; height:10px; border-radius:999px;
+      background:rgba(255,255,255,.55);
+      border:1px solid rgba(11,19,32,.25);
+      cursor:pointer;
+    }
+    .hc-dot[aria-current="true"]{ background:var(--primary); border-color:var(--primary); }
+
+    /* arrows */
+    .hc-arrow{
+      position:absolute; top:50%; transform:translateY(-50%);
+      width:40px; height:40px; border-radius:50%;
+      display:grid; place-items:center; cursor:pointer; z-index:3;
+      background:rgba(255,255,255,.9);
+      border:1px solid rgba(11,19,32,.15);
+      box-shadow:0 6px 18px rgba(0,0,0,.12);
+      font-size:24px; line-height:1; color:#333;
+    }
+    .hc-arrow:hover{ background:#fff; }
+    .hc-prev{ left:16px; } .hc-next{ right:16px; }
+
+    /* down-arrow jumper (bottom-right) */
+    .hc-jump{
+      position:absolute;
+      right:clamp(24px, 10vw, 160px);
+      bottom:18px;
+      z-index:3;
+      width:56px; height:56px; border-radius:50%;
+      display:grid; place-items:center;
+      background:rgba(11,19,32,.06);
+      border:1px solid rgba(11,19,32,.12);
+      color:var(--blue);
+      box-shadow:0 12px 26px rgba(0,0,0,.15);
+      backdrop-filter:blur(4px);
+      text-decoration:none;
+      transition:transform .15s, background .15s, box-shadow .15s
+    }
+    .hc-jump:hover{background:rgba(11,19,32,.09); transform:translateY(2px); box-shadow:0 16px 30px rgba(0,0,0,.18)}
+
+    /* Hide old per-slide arrow */
+    .hero-arrow{ display:none !important; }
+
+    /* ---------------- WHY ---------------- */
+    .why{position:relative; z-index:2; background:var(--bg); padding:64px 0 90px}
+    .why-wrap{width:100%; max-width:var(--wrap-max); margin:0 auto; padding:0 var(--page-pad); scroll-margin-top:calc(var(--header-h) + 24px)}
+    .why-title{margin:0 0 10px; font-family:Sora, Inter, system-ui, sans-serif; font-size:34px; line-height:1.15; letter-spacing:-.3px; color:var(--text)}
+    .why-lead{margin:0 0 24px; color:var(--text-2); max-width:72ch; line-height:1.45}
+    .why-cards{display:flex; flex-wrap:wrap; gap:18px; margin-top:18px}
+    .why-card{flex:1 1 240px; min-width:240px; background:var(--surface); border:1px solid color-mix(in oklab, var(--text), transparent 92%); border-radius:16px; padding:18px; box-shadow:0 10px 24px rgba(0,0,0,.08)}
+    .why-badge{
+  display: inline-flex;          /* size to content + easy centering */
+  align-items: center;           /* vertical center */
+  justify-content: center;       /* horizontal center */
+  padding: 0 10px;               /* width grows with text */
+  height: 32px;                  /* consistent height */
+  line-height: 1;                /* no extra vertical space */
+  white-space: nowrap;           /* keep labels on one line */
+  border-radius: 10px;
+  margin: 0 0 10px 0;
+
+  /* keep your colors/brand vars — change if needed */
+  background: rgba(46,108,246,.12);
+  border: 1px solid rgba(46,108,246,.35);
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+    .why-card h3{margin:0 0 8px 0; font-size:18px; letter-spacing:-.2px; color:var(--text)}
+    .why-card p{margin:0; color:var(--text-2); line-height:1.45}
+    .why-cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:24px}
+
+/* decorative brand rail pinned to the bottom-right of the WHY section */
+.brand-rail{
+  position: absolute;                                      /* <-- key fix */
+  right: max(calc((100vw - var(--wrap-max))/2), var(--page-pad));
+  bottom: 0;                                               /* sit on the bottom edge */
+  width: clamp(160px, 22vw, 320px);
+  height: auto;
+  color: var(--primary);
+  opacity: .16;                                            /* transparent */
+  pointer-events: none;
+  transform: translateX(80%);                              /* nudge toward page margin; adjust 0–60% */
+  z-index: 0;                                              /* behind the cards */
+}
+@media (max-width: 900px){
+  .brand-rail{ display:none; }
+}
+
+
+
+    /* ========== OUR MISSION ========== */
+    .mission{
+      background: var(--surface);
+      border-top: 4px solid var(--primary);
+      padding: 80px 0 110px;
+      margin-top: clamp(32px, 6vw, 72px);
+    }
+    .mission-wrap{width:100%; max-width:var(--wrap-max); margin:0 auto; padding:0 var(--page-pad); scroll-margin-top: calc(var(--header-h) + 24px);}
+    .mission-grid{display:grid; grid-template-columns: 1.05fr .95fr; gap: clamp(18px, 4vw, 48px); align-items:center;}
+    .mission-title{margin:0 0 10px; font-family:Sora, Inter, system-ui, sans-serif; font-size:34px; line-height:1.15; letter-spacing:-.3px; color: var(--text);}
+    .mission-text{margin:0 0 22px; color: var(--text-2); max-width: 72ch; line-height:1.45;}
+    .mission-points{display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:18px; margin-top: 18px;}
+    .mission-point{background: var(--surface); border:1px solid color-mix(in oklab, var(--text), transparent 92%); border-radius:16px; padding:18px; box-shadow:0 10px 24px rgba(0,0,0,.08);}
+    .mission-point h3{margin:8px 0 6px; font-size:18px; letter-spacing:-.2px; color: var(--text);}
+    .mission-point p{margin:0; color: var(--text-2); line-height:1.45;}
+    .point-icon{width:36px; height:36px; border-radius:10px; display:grid; place-items:center; background: rgba(184,28,34,.12); border:1px solid rgba(184,28,34,.35); color: var(--primary);}
+    .mission-visual{width:100%; aspect-ratio: 4 / 3; background: var(--surface); border:1px solid color-mix(in oklab, var(--text), transparent 90%); box-shadow:0 20px 50px rgba(0,0,0,.08); overflow:hidden;}
+    .mission-visual img{width:100%; height:100%; object-fit:cover; display:block;}
+    .mission-visual-cta{display:flex; justify-content:center; margin-top:12px;}
+    .mission-visual-cta .btn{padding:12px 16px; border-radius:0; font-weight:600; background: var(--primary); color:#fff; box-shadow:0 10px 30px rgba(184,28,34,.25);}
+    .mission-visual-cta .btn:hover{transform:translateY(-1px); box-shadow:0 12px 36px rgba(184,28,34,.35);}
+    @media (max-width: 960px){
+      .mission-points{ grid-template-columns: 1fr; }
+      .mission-grid{ grid-template-columns: 1fr; }
+      .mission-visual{ order:-1; margin-bottom:12px; }
+    }
+
+    /* ========== PRODUCT OVERVIEW — TABLE STYLE ========== */
+    .products{
+      background: var(--bg);
+      padding: 72px 0 110px;
+      border-top: 1px solid color-mix(in oklab, var(--text), transparent 92%);
+    }
+    .products-wrap{width:100%; max-width:var(--wrap-max); margin:0 auto; padding:0 var(--page-pad); scroll-margin-top: calc(var(--header-h) + 24px);}
+    .products-title{margin:0 0 10px; font-family:Sora, Inter, system-ui, sans-serif; font-size:34px; line-height:1.15; letter-spacing:-.3px; color:var(--text);}
+    .products-lead{margin:0 0 22px; color:var(--text-2); max-width:72ch; line-height:1.45;}
+
+    .prod-table-wrap{
+      background:var(--surface);
+      border:1px solid color-mix(in oklab, var(--text), transparent 92%);
+      border-radius:14px;
+      box-shadow:0 10px 24px rgba(0,0,0,.08);
+      overflow:auto;
+    }
+    table.prod-table{
+      width:100%;
+      border-collapse:separate; border-spacing:0; min-width:780px;
+    }
+    .prod-table thead th{
+      position:sticky; top:0; z-index:1;
+      background:color-mix(in oklab, var(--surface), #000 0%);
+      font-weight:700; font-size:14px; text-align:left; color:var(--text);
+      border-bottom:1px solid color-mix(in oklab, var(--text), transparent 90%);
+      padding:14px 12px;
+    }
+    .prod-table tbody td{
+      padding:14px 12px; font-size:14px; color:var(--text-2);
+      border-bottom:1px solid color-mix(in oklab, var(--text), transparent 94%);
+      vertical-align:middle;
+    }
+    .prod-table tbody tr:hover{ background: color-mix(in oklab, var(--blue), transparent 96%); }
+    .prod-compare{ width:54px; text-align:center; }
+    .prod-name{ min-width:260px; color:var(--text); font-weight:600; }
+    .prod-name .name{ display:flex; align-items:center; gap:10px; }
+    .prod-thumb{
+      width:64px; height:42px; object-fit:cover; border-radius:6px;
+      border:1px solid color-mix(in oklab, var(--text), transparent 90%);
+      background:#f2f6fb;
+    }
+    .pill-link{
+      display:inline-block; padding:8px 12px; border-radius:999px;
+      border:1px solid color-mix(in oklab, var(--text), transparent 86%);
+      background: color-mix(in oklab, var(--surface), #000 0%);
+      text-decoration:none; color:var(--text);
+      font-weight:600; font-size:13px;
+    }
+    .pill-link:hover{ border-color: color-mix(in oklab, var(--text), transparent 70%); }
+
+    /* compare bar */
+    .compare-bar{
+      position:sticky; bottom:16px; z-index:2;
+      margin-top:16px; display:flex; align-items:center; justify-content:space-between;
+      padding:10px 14px; border-radius:12px;
+      background:#0b0f15; color:#fff;
+      box-shadow:0 12px 28px rgba(0,0,0,.28);
+    }
+    .compare-bar .count{
+      font-weight:700; background:#ffffff1a; padding:6px 10px; border-radius:10px;
+    }
+    .compare-bar .btn{
+      background:#fff; color:#0b0f15; border-radius:0; padding:10px 14px; font-weight:700;
+    }
+    .compare-bar .btn[aria-disabled="true"]{opacity:.6; pointer-events:none}
+
+    /* responsive product rows */
+    @media (max-width:760px){
+      table.prod-table{min-width:0}
+      .prod-table thead{display:none}
+      .prod-table tbody tr{
+        display:grid; grid-template-columns:1fr 1fr; gap:10px;
+        padding:10px 12px;
+      }
+      .prod-table tbody td{ border:0; padding:6px 0; }
+      .prod-compare{grid-column:1/3; order:-2}
+      .prod-name{grid-column:1/3; order:-1}
+      .prod-table tbody td[data-label]::before{
+        content:attr(data-label) " — ";
+        font-weight:600; color:var(--text);
+      }
+    }
+
+    /* ========== COMPARE MODAL ========== */
+    .modal-overlay{
+      position:fixed; inset:0; z-index:50;
+      background:rgba(0,0,0,.55);
+      display:grid; place-items:center;
+      padding:24px;
+    }
+    .compare-modal{
+      width:min(1100px, 100%);
+      background:var(--surface);
+      border-radius:14px;
+      box-shadow:0 24px 70px rgba(0,0,0,.35);
+      overflow:hidden;
+      display:flex; flex-direction:column;
+    }
+    .cm-header{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:16px 18px; border-bottom:1px solid color-mix(in oklab, var(--text), transparent 90%);
+    }
+    .cm-title{font-family:Sora, Inter, system-ui, sans-serif; font-size:18px; font-weight:800;}
+    .cm-close{
+      display:grid; place-items:center; width:36px; height:36px; border-radius:10px;
+      background:transparent; border:1px solid color-mix(in oklab, var(--text), transparent 85%); cursor:pointer;
+    }
+    .cm-body{ padding:16px; overflow:auto; }
+    .cmp-cols{
+      display:grid; gap:16px;
+      grid-auto-flow:column;
+      grid-auto-columns:minmax(260px, 1fr);
+    }
+    .cmp-card{
+      border:1px solid color-mix(in oklab, var(--text), transparent 90%);
+      border-radius:12px;
+      overflow:hidden; background:var(--surface);
+      box-shadow:0 8px 18px rgba(0,0,0,.06);
+    }
+    .cmp-top{
+      padding:16px; text-align:center; border-bottom:1px solid color-mix(in oklab, var(--text), transparent 92%);
+    }
+    .cmp-top img{width:200px; height:130px; object-fit:cover; border-radius:8px; border:1px solid color-mix(in oklab, var(--text), transparent 90%);}
+    .cmp-name{margin:10px 0 12px; font-weight:800; color:var(--text)}
+    .cmp-top .btn{padding:10px 14px; border-radius:0; background:var(--primary); color:#fff}
+    .cmp-specs{width:100%; border-collapse:collapse}
+    .cmp-specs td{
+      font-size:14px; color:var(--text-2);
+      border-bottom:1px solid color-mix(in oklab, var(--text), transparent 94%);
+      padding:10px 12px;
+    }
+    .cmp-specs td:first-child{font-weight:600; color:var(--text); width:48%}
+
+    /* ========== APPLICATIONS ========== */
+    .apps{
+      background: var(--bg);
+      padding: 72px 0 100px;
+      border-top: 1px solid color-mix(in oklab, var(--text), transparent 92%);
+    }
+    .apps-wrap{ max-width: var(--wrap-max); margin:0 auto; padding:0 var(--page-pad); }
+    .apps-title{
+      margin:0 0 10px; font-family:Sora, Inter, system-ui, sans-serif;
+      font-size:34px; line-height:1.15; letter-spacing:-.3px; color:var(--text);
+    }
+    .apps-lead{ margin:0 0 18px; color:var(--text-2); max-width:72ch; }
+    .apps-filters{ display:flex; gap:8px; flex-wrap:wrap; margin: 10px 0 8px; }
+    .filter-chip{
+      appearance:none; cursor:pointer; user-select:none;
+      padding:8px 12px; border-radius:999px; font-weight:600; font-size:14px;
+      background:rgba(11,19,32,.04); color:var(--text);
+      border:1px solid rgba(11,19,32,.12);
+      transition:background .15s, color .15s, border-color .15s;
+    }
+    .filter-chip:hover{ background:rgba(11,19,32,.08); }
+    .filter-chip.on{ background:var(--primary); color:#fff; border-color:var(--primary); }
+    .filter-chip.reset{ margin-left:auto; }
+
+    .apps-grid{
+      display:grid; gap:18px; margin-top:18px;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+    }
+    @media (max-width: 1080px){ .apps-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    @media (max-width: 700px){ .apps-grid{ grid-template-columns: 1fr; } }
+
+    .app-card{
+      background: var(--surface);
+      border:1px solid color-mix(in oklab, var(--text), transparent 92%);
+      border-radius:16px; padding:18px;
+      box-shadow:0 10px 24px rgba(0,0,0,.08);
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .app-head{ display:flex; gap:12px; align-items:center; }
+    .app-icon{
+      width:36px; height:36px; border-radius:10px;
+      display:grid; place-items:center;
+      background: rgba(46,108,246,.12);
+      border:1px solid rgba(46,108,246,.35);
+      color: var(--blue);
+    }
+    .app-title{ margin:0 0 4px 0; font-size:18px; letter-spacing:-.2px; color:var(--text); }
+    .app-metrics{ display:flex; flex-wrap:wrap; gap:6px; }
+    .metric{
+      font-size:12px; font-weight:700; letter-spacing:.2px;
+      padding:2px 8px; border-radius:8px;
+      background:rgba(11,19,32,.06); border:1px solid rgba(11,19,32,.12);
+    }
+    .app-text{ margin:0; color:var(--text-2); line-height:1.45; }
+    .app-fit{ font-size:14px; color:var(--text-2); }
+    .app-more{
+      align-self:flex-start;
+      padding:8px 12px; border-radius:10px; border:1px solid rgba(11,19,32,.12);
+      background:rgba(11,19,32,.04); font-weight:600; cursor:pointer;
+    }
+    .app-more:hover{ background:rgba(11,19,32,.08); }
+    .app-details{ display:none; margin-top:-2px; }
+    .app-card.open .app-details{ display:block; }
+    .app-card.open .app-more[aria-expanded="true"]{ background:rgba(11,19,32,.10); }
+    .apps-cta{ display:flex; gap:12px; flex-wrap:wrap; margin-top:24px; }
+
+    /* Bigger hero carousel dots */
+.hc-dots{ 
+  gap: 12px;              /* space between dots (was 8px) */
+  bottom: 24px;           /* move the row up a little if needed */
+}
+
+.hc-dot{
+  width: 11px;            /* dot visual size (was 10px) */
+  height: 11px;
+  border-width: 2px;      /* thicker ring */
+  border-radius: 999px;
+}
+
+/* Make the active one pop a bit */
+.hc-dot[aria-current="true"]{
+  transform: scale(1.15);
+}
+
+/* Optional: larger click/tap target without making the dot look huge */
+.hc-dot{
+  position: relative;
+}
+.hc-dot::before{
+  content:"";
+  position:absolute;
+  inset:-12px;            /* expands the hit area to ~40x40px */
+}
+
+/* Push "Why We're Different" further down */
+#mrs-why{
+  margin-top: clamp(48px, 10vh, 160px); /* tweak the middle value (10–14vh) to taste */
+}
+
+/* --- Make "Applications" stand out from Product Overview --- */
+
+/* Give the Product Overview a clean bottom edge */
+.products{
+  padding-bottom: clamp(64px, 9vh, 120px);
+  border-bottom: 1px solid color-mix(in oklab, var(--text), transparent 85%);
+}
+
+/* Switch Applications onto a white surface and add a soft divider + extra air */
+.apps{
+  position: relative;
+  background: var(--surface) !important;                  /* different from .products (var(--bg)) */
+  padding-top: clamp(72px, 10vh, 140px);
+  padding-bottom: clamp(90px, 12vh, 160px);
+}
+
+/* Subtle “section break” fade at the top of Applications */
+.apps::before{
+  content:"";
+  position:absolute; left:0; right:0; top:0; height:42px;
+  background: linear-gradient(to bottom, rgba(11,19,32,.14), rgba(11,19,32,0));
+  pointer-events:none; opacity:.35;
+}
+
+/* Optional: a tiny accent line to further separate (uncomment if you like it) */
+/*
+.apps{ border-top: 3px solid color-mix(in oklab, var(--blue), #fff 80%); }
+*/
+
+/* Red separation line (same as Mission) above the Applications section */
+.products{
+  padding-bottom: clamp(72px, 10vh, 120px); /* give the line some breathing room */
+}
+
+.apps{
+  background: var(--surface);               /* ensure contrast with previous section */
+  border-top: 4px solid var(--primary);     /* mRS red line */
+  padding-top: clamp(64px, 8vh, 96px);      /* space after the line */
+  box-shadow: none;                          /* in case a soft inset was added earlier */
+}
+
+/* If you previously added a fade line for Apps, disable it */
+.apps::before{ content:none !important; }
+
+/* Make the "Compare products" button rounded (pill) */
+.compare-bar .btn,
+#compareBtn{
+  border-radius:999px;            /* was 0 */
+  padding:12px 18px;              /* a touch more breathing room */
+}
+
+/* Optional: nicer hover/focus */
+.compare-bar .btn:hover{ background:#f5f7fa; }
+.compare-bar .btn:focus-visible{
+  outline:2px solid var(--primary);
+  outline-offset:2px;
+  border-radius:999px;
+}
+
+/* ========== CUSTOM SOLUTIONS (revamped) ========== */
+.custom{
+  position: relative;
+  background:
+    radial-gradient(900px 500px at 12% 10%, color-mix(in oklab, var(--blue), #fff 94%), transparent 55%),
+    linear-gradient(180deg, var(--surface) 0%, color-mix(in oklab, var(--bg), #fff 0%) 100%);
+  border-top: 4px solid var(--primary);
+  padding: clamp(72px, 9vh, 120px) 0 clamp(96px, 12vh, 160px);
+  overflow: hidden;
+}
+
+/* faint blueprint grid */
+.custom::before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    repeating-linear-gradient(0deg,
+      color-mix(in oklab, var(--blue), transparent 92%) 0 1px,
+      transparent 1px 40px),
+    repeating-linear-gradient(90deg,
+      color-mix(in oklab, var(--blue), transparent 92%) 0 1px,
+      transparent 1px 40px);
+  opacity:.28; pointer-events:none;
+  mask-image: radial-gradient(1200px 800px at 70% 10%, #000 0%, transparent 70%);
+}
+
+/* soft corner glow */
+.custom::after{
+  content:"";
+  position:absolute; right:-12vw; top:-12vh; width:50vw; height:50vh;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--primary), #fff 80%), transparent 70%);
+  opacity:.12; pointer-events:none; filter: blur(6px);
+}
+
+.custom-wrap{
+  width:100%; max-width:var(--wrap-max); margin:0 auto; padding:0 var(--page-pad);
+  scroll-margin-top: calc(var(--header-h) + 24px);
+}
+
+.custom-grid{
+  display:grid; grid-template-columns: 1.1fr .9fr;
+  gap: clamp(18px, 4vw, 56px); align-items:start;
+}
+
+/* eyebrow label + title */
+.eyebrow{
+  display:inline-block; font-weight:800; letter-spacing:.3px;
+  text-transform:uppercase; font-size:12px;
+  padding:6px 10px; border-radius:999px;
+  background:color-mix(in oklab, var(--primary), #fff 85%); color:var(--primary);
+  border:1px solid color-mix(in oklab, var(--primary), transparent 25%);
+  margin-bottom:10px;
+}
+.custom-title{ margin:4px 0 10px; font-family:Sora, Inter, system-ui, sans-serif;
+  font-size:36px; line-height:1.12; letter-spacing:-.3px; color:var(--text); }
+
+.custom-lead{ margin:0 0 18px; color:var(--text-2); max-width:72ch; line-height:1.5; }
+.custom-list{ margin:12px 0 0; padding-left:1.1em; color:var(--text-2); line-height:1.6; }
+.custom-list li{ margin:.25em 0; }
+
+/* 3-step process timeline */
+.process{
+  position:relative; margin-top:18px;
+  display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:16px;
+}
+.process::before{
+  content:""; position:absolute; left:6px; right:6px; top:22px; height:2px;
+  background:linear-gradient(90deg,
+    color-mix(in oklab, var(--text), transparent 82%) 0%,
+    color-mix(in oklab, var(--text), transparent 92%) 100%);
+}
+.step{ position:relative; padding-top:28px; }
+.step .dot{
+  position:absolute; left:0; top:0; width:44px; height:44px; border-radius:50%;
+  display:grid; place-items:center; font-weight:800;
+  color:var(--text);
+  background:#fff; border:2px solid color-mix(in oklab, var(--text), transparent 80%);
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+.step h4{ margin:8px 0 4px; font-size:16px; letter-spacing:-.2px; color:var(--text); padding-left:56px; }
+.step p{ margin:0; color:var(--text-2); padding-left:56px; font-size:14px; }
+
+.custom-cta{ display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+
+/* cards on the right */
+.c-cards{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:18px; }
+.c-card{
+  background: var(--surface);
+  border:1px solid color-mix(in oklab, var(--text), transparent 90%);
+  border-radius:16px; padding:18px;
+  box-shadow:0 12px 26px rgba(0,0,0,.08);
+  display:flex; flex-direction:column; gap:8px;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  will-change: transform;
+}
+.c-card:hover{
+  transform: translateY(-4px);
+  box-shadow:0 20px 40px rgba(0,0,0,.12);
+  border-color: color-mix(in oklab, var(--blue), transparent 70%);
+}
+.c-icon{
+  width:38px; height:38px; border-radius:10px; display:grid; place-items:center;
+  background: rgba(184,28,34,.12); border:1px solid rgba(184,28,34,.35); color: var(--primary);
+}
+.c-card h3{ margin:8px 0 4px; font-size:18px; letter-spacing:-.2px; color:var(--text); }
+.c-card p{ margin:0; color:var(--text-2); line-height:1.45; }
+.c-tags{ display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+.c-tag{
+  font-size:12px; font-weight:700; letter-spacing:.2px; padding:2px 8px; border-radius:8px;
+  background:rgba(11,19,32,.06); border:1px solid rgba(11,19,32,.12); color:var(--text);
+}
+
+/* dark CTA band */
+.custom-band{
+  margin-top: clamp(28px, 6vh, 60px);
+  background:#0b0f15;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.06);
+  padding:18px;
+  box-shadow:0 18px 46px rgba(0,0,0,.28);
+  position:relative;
+  overflow:hidden;
+}
+.custom-band::before{
+  content:""; position:absolute; inset:0;
+  background:
+    radial-gradient(600px 280px at 8% 50%, rgba(255,255,255,.06), transparent 60%),
+    radial-gradient(600px 280px at 92% 50%, rgba(255,255,255,.06), transparent 60%);
+  opacity:.7; pointer-events:none;
+}
+.band-row{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.band-row strong{ color:#fff; font-weight:800; letter-spacing:.2px; }
+.custom-band .btn{ border-radius:999px; padding:12px 18px; }
+.custom-band .btn.primary{ box-shadow:none; }
+
+@media (max-width: 960px){
+  .custom-grid{ grid-template-columns:1fr; }
+  .process{ grid-template-columns:1fr; gap:14px; }
+  .process::before{ display:none; }
+  .step{ padding-top:0; }
+  .step .dot{ position:static; margin-bottom:8px; }
+  .step h4, .step p{ padding-left:0; }
+  .c-cards{ grid-template-columns:1fr; }
+}
+
+/* ===== VALUE / FIT GUIDE ===== */
+.value{
+  position:relative;
+  background:linear-gradient(180deg, var(--surface), color-mix(in oklab, var(--surface), #000 3%));
+  border-top:4px solid var(--primary);
+  padding: clamp(56px, 8vh, 96px) 0 clamp(72px, 10vh, 120px);
+  overflow:hidden;
+}
+.value-wrap{
+  width:100%;
+  /* a bit wider than the rest of the site */
+  max-width: calc(var(--wrap-max) + 280px);
+  margin:0 auto;
+  padding:0 clamp(16px, 3vw, 36px);
+}
+.value-grid{
+  display:grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: clamp(18px, 4vw, 48px);
+  align-items:start;
+}
+@media (max-width: 1024px){ .value-grid{ grid-template-columns:1fr; } }
+
+.value-title{
+  margin:0 0 8px; font-family:Sora, Inter, system-ui, sans-serif;
+  font-size:32px; letter-spacing:-.3px; color:var(--text);
+}
+.value-lead{ margin:0 0 16px; color:var(--text-2); line-height:1.45; }
+.value-note{ margin:10px 0 16px; font-size:14px; color:var(--text-2); }
+
+.value-cta{ display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+.value-cta .btn{ border-radius:999px; padding:10px 14px; }
+
+/* Left visuals */
+.value-visual{
+  display:grid; gap:14px;
+}
+.vna-photo{
+  width:100%; aspect-ratio: 4/3; object-fit:cover; border-radius:16px;
+  border:1px solid color-mix(in oklab, var(--text), transparent 90%);
+  box-shadow:0 18px 40px rgba(0,0,0,.12);
+}
+.ref-shot{
+  width:100%; border-radius:14px; opacity:.85;
+  border:1px dashed color-mix(in oklab, var(--text), transparent 82%);
+}
+
+/* Comparison table */
+.fit-wrap{
+  background:var(--surface);
+  border:1px solid color-mix(in oklab, var(--text), transparent 90%);
+  border-radius:16px;
+  box-shadow:0 12px 28px rgba(0,0,0,.08);
+  overflow:auto;
+  padding:10px;
+}
+.fit{
+  width:100%;
+  border-collapse:separate; border-spacing:0;
+  min-width:880px;
+  font-size:14.5px;
+}
+.fit th, .fit td{
+  padding:12px 12px;
+  border-bottom:1px solid color-mix(in oklab, var(--text), transparent 92%);
+  vertical-align:middle;
+}
+.fit thead th{
+  position:sticky; top:0; z-index:1;
+  background:color-mix(in oklab, var(--surface), #000 0%);
+  font-weight:800; color:var(--text);
+}
+.fit .feature{ 
+  position:sticky; left:0; z-index:2; background:var(--surface); 
+  font-weight:700; color:var(--text);
+  min-width:190px;
+}
+
+/* Nice column hover */
+.fit thead th:hover,
+.fit td[data-col]:hover{
+  background: color-mix(in oklab, var(--blue), transparent 95%);
+}
+
+/* Emphasis for miniVNA Pro 2 column */
+.fit .mini-col{ background: color-mix(in oklab, var(--blue), transparent 97%); }
+.fit .mini-col.is-key{ 
+  background: linear-gradient(180deg,
+    color-mix(in oklab, var(--blue), transparent 92%),
+    color-mix(in oklab, var(--blue), transparent 97%));
+  position:relative;
+}
+.badge{
+  display:inline-block; font-size:11px; font-weight:800; letter-spacing:.25px;
+  padding:2px 8px; border-radius:999px; margin-left:8px;
+  color:#fff; background:var(--primary); box-shadow:0 6px 16px rgba(184,28,34,.22);
+}
+
+/* Icons */
+.i-check, .i-x{
+  display:inline-grid; place-items:center; width:18px; height:18px; border-radius:999px;
+  font-weight:900; font-size:13px; line-height:1; vertical-align:middle;
+}
+.i-check{ background:#12b98122; color:#0f9d58; border:1px solid #0f9d5840; }
+.i-x{ background:#ef444422; color:#b91c1c; border:1px solid #b91c1c40; }
+
+/* Small footnotes */
+.table-foot{ font-size:12.5px; color:var(--text-2); margin-top:8px; }
+
+/* Subtle reveal */
+.reveal{ opacity:0; transform:translateY(10px); animation:reveal .5s ease forwards; }
+@keyframes reveal{ to{ opacity:1; transform:none; } }
+
+/* Widen the Value section and give more space to the table */
+@media (min-width: 1200px){
+  .value-wrap{
+    /* bleed wider than the normal page container */
+    max-width: min(1600px, 96vw);
+  }
+  .value-grid{
+    /* left (photo/copy) | right (table) */
+    grid-template-columns: .85fr 1.15fr; /* was ~1.05 /.95 */
+  }
+}
+
+/* Optional: push the table to the very edge (nice on big screens) */
+@media (min-width: 1200px){
+  .fit-wrap{
+    margin-right: calc(-1 * clamp(16px, 3vw, 36px)); /* bleed right */
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+/* Let the table use all granted width and squeeze a bit more content in */
+@media (min-width: 1200px){
+  .fit{ min-width: 0; font-size: 13.75px; }     /* allow shrinking; small font tweak */
+  .fit th, .fit td{ padding: 10px 10px; }       /* tighter cells = less overflow */
+  .fit thead th{ white-space: nowrap; }         /* keep headers compact */
+}
+
+/* ===== FINAL CALL / END CAP ===== */
+.endcap{
+  position: relative;
+  background:#0b0f15;                    /* dark end */
+  color:#e5ecf6;
+  border-top:4px solid var(--primary);   /* keeps visual rhythm with other sections */
+  padding: clamp(72px, 10vh, 140px) 0 clamp(84px, 12vh, 160px);
+  overflow:hidden;
+  isolation:isolate;
+}
+
+/* angled top edge */
+.endcap::before{
+  content:"";
+  position:absolute; left:0; right:0; top:-10vw; height:22vw;
+  background: linear-gradient(180deg, transparent 35%, #0b0f15 36%);
+  transform: skewY(-3deg);
+  pointer-events:none;
+}
+
+/* faint grid + corner glow for interest */
+.endcap::after{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    radial-gradient(800px 360px at 85% -10%, rgba(123,209,255,.20), transparent 65%),
+    radial-gradient(900px 460px at -10% 110%, rgba(46,108,246,.18), transparent 70%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.055) 0 1px, transparent 1px 34px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.045) 0 1px, transparent 1px 34px);
+  opacity:.35;
+  mix-blend-mode: screen;
+  pointer-events:none;
+}
+
+.endcap-wrap{
+  width:100%; max-width: calc(var(--wrap-max) + 160px);
+  margin:0 auto; padding:0 var(--page-pad);
+  display:grid; gap: clamp(18px, 4vw, 48px);
+  grid-template-columns: 1.05fr .95fr;
+  align-items:center;
+}
+@media (max-width: 960px){ .endcap-wrap{ grid-template-columns: 1fr; text-align:center; } }
+
+.endcap-eyebrow{
+  display:inline-block; font-weight:800; letter-spacing:.3px; text-transform:uppercase; font-size:12px;
+  padding:6px 10px; border-radius:999px;
+  background:color-mix(in oklab, var(--primary), #fff 85%); color:var(--primary);
+  border:1px solid color-mix(in oklab, var(--primary), transparent 25%);
+  margin-bottom:10px;
+}
+
+.endcap-title{
+  margin:6px 0 12px; font-family:Sora, Inter, system-ui, sans-serif;
+  font-weight:800; letter-spacing:-.3px; line-height:1.08;
+  font-size: clamp(30px, 4.8vw, 52px);
+  color:#fff;
+}
+.endcap-text{
+  margin: 0 0 22px; color:#c9d3e3; max-width: 66ch; line-height:1.5;
+}
+.endcap-cta{ display:flex; gap:12px; flex-wrap:wrap; }
+@media (max-width:960px){ .endcap-cta{ justify-content:center; } }
+
+.endcap .btn{
+  border-radius:999px;                     /* softer than the rest to feel “final” */
+  padding:14px 20px; font-weight:800;
+}
+.endcap .btn.primary{
+  background: var(--primary); color:#fff;
+  box-shadow:0 12px 36px rgba(184,28,34,.35);
+}
+.endcap .btn.ghost{
+  background: transparent; color:#e5ecf6;
+  border:1px solid rgba(255,255,255,.20);
+}
+.endcap .btn.ghost:hover{ background: rgba(255,255,255,.06); }
+
+/* right visuals: device silhouette + sparkline sweep */
+.endcap-visual{
+  position:relative; width:100%; aspect-ratio: 4 / 3;
+  border-radius:16px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 22px 60px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.04);
+  overflow:hidden;
+}
+.endcap-visual .shine{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(800px 320px at 15% 0%, rgba(255,255,255,.18), transparent 55%),
+    radial-gradient(600px 260px at 85% 100%, rgba(123,209,255,.20), transparent 65%);
+  mix-blend-mode: screen; opacity:.6; pointer-events:none;
+}
+.endcap-visual .mock{
+  position:absolute; left:50%; top:52%; transform:translate(-50%,-50%);
+  width:min(86%, 640px); height:auto; opacity:.92; filter: drop-shadow(0 16px 40px rgba(0,0,0,.45));
+  border-radius:10px; display:block;
+}
+
+/* animated sweep line */
+.sweep{
+  position:absolute; inset:0; pointer-events:none;
+}
+
+/* Make sure the angled/mist overlays stay behind the content */
+.endcap::before,
+.endcap::after { z-index: 0; }
+
+.endcap-wrap,
+.endcap-visual { position: relative; z-index: 1; }
+
+/* Make the endcap section fully dark */
+.endcap {
+  background: #0b0f15 !important;   /* deep dark background */
+}
+
+/* Remove the grid/angled overlay */
+.endcap::before,
+.endcap::after {
+  display: none !important;
+}
+
+/* Endcap background stays solid dark */
+.endcap { background:#0b0f15 !important; }
+
+/* Remove any angled/grid overlays */
+.endcap::before,
+.endcap::after { display:none !important; }
+
+/* Make endcap buttons square (match site-wide default) */
+.endcap .btn { border-radius:0 !important; }        /* no pill */
+.endcap .btn.primary { padding:14px 20px; }         /* same spacing as others */
+
+.endcap-visual {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Square button in the Custom band */
+.custom-band .btn{
+  border-radius: 0 !important;   /* or try 6px for a small radius */
+  padding: 12px 18px;            /* keep the spacing */
+}
+
+/* Turn all red primary buttons blue site-wide */
+.btn.primary{
+  background: #2E6CF6 !important;               /* blue */
+  box-shadow: 0 8px 30px rgba(46,108,246,.25) !important;
+}
+.btn.primary:hover{
+  box-shadow: 0 10px 36px rgba(46,108,246,.35) !important;
+}
+
+/* Header “Shop Now” is a separate class—make it blue too */
+.shop-btn{
+  background: #2E6CF6 !important;
+  box-shadow: 0 6px 20px rgba(46,108,246,.32) !important;
+}
+
+/* Make all buttons square */
+.btn {
+  border-radius: 6px !important;  /* or 0 for perfectly square */
+  padding: 12px 20px;             /* keeps spacing consistent */
+}
+
+/* Make endcap buttons use the global rounded style */
+.endcap .btn {
+  border-radius: 6px !important; /* or match whatever global radius you like */
+}
+
+/* Match "Start a Custom Quote" button to global style */
+.custom-band .btn {
+  border-radius: 6px !important;  /* same as other buttons */
+}
+
+/* Option A: caption link under the image */
+.media-caption {
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* Caption link (no border) */
+.link-arrow{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--blue);
+  text-decoration: none;
+  padding-bottom: 2px;              /* room for the underline */
+  transition: transform .15s ease;  /* keeps your slight nudge if you want it */
+}
+
+/* the animated underline */
+.link-arrow::after{
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: color-mix(in oklab, var(--blue), transparent 40%);
+  transform: scaleX(0);             /* start hidden */
+  transform-origin: 50% 50%;        /* expand from center */
+  transition: transform .25s ease;  /* timing of the grow */
+}
+
+/* grow the underline from center on hover/focus */
+.link-arrow:hover::after,
+.link-arrow:focus-visible::after{
+  transform: scaleX(1);
+}
+
+/* optional: keep your arrow nudge */
+.link-arrow::after + * {}
+.link-arrow:hover { transform: translateX(2px); }
+.link-arrow::after {}              /* (no change; just here to show structure) */
+.link-arrow:hover::after {}        /* handled above */
+
+.link-arrow::after,
+.link-arrow:focus-visible { outline: none; }
+
+/* Make all buttons fully square */
+.btn {
+  border-radius: 0 !important;
+}
+
+/* Force square buttons everywhere, even inside special sections */
+.custom-band .btn,
+.endcap .btn,
+.btn {
+  border-radius: 0 !important;
+}
+
+.endcap-visual .shine {
+  display: none !important;
+}
+
+
+.hero .product-shot::before{ content:none; }
+
+
+.hero .product-shot {
+  border-radius: 0 !important;  /* enforce square */
+  overflow: hidden;
+  border: 1.5px solid color-mix(in oklab, var(--text), transparent 80%) !important;
+
+}
+
+.hero .product-shot{
+  box-shadow: 0 20px 50px rgba(0,0,0,.12), 0 30px 80px rgba(0,0,0,.08) inset !important;
+}
+
+
+/* ===== Hero split image: equal halves + easy tuning ===== */
+
+/* 1) Force a true 50/50 split and clip inside each half */
+.hero .product-shot .combo{
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* left | right */
+  gap: 0;
+  overflow: hidden;
+}
+
+/* 2) Remove the old center divider line */
+.hero .product-shot .combo::before{
+  content: none !important;
+  display: none !important;
+}
+
+/* 3) Make both images fill their side exactly */
+.hero .product-shot .shot{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border:0;
+}
+
+/* ===== Hero split: perfect 50/50 with clipping ===== */
+
+/* Make the inner container fill the card */
+.hero .product-shot .combo{
+  position: absolute;  /* fill the .product-shot */
+  inset: 0;
+  overflow: hidden;
+  display: block;      /* no grid needed */
+}
+
+/* Kill the old divider line */
+.hero .product-shot .combo::before{
+  content: none !important;
+  display: none !important;
+}
+
+/* Both images are stacked and fill the area */
+.hero .product-shot .shot{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border: 0;
+}
+
+/* LEFT image: show only left half, but push focus to the right */
+.hero .product-shot .field{
+  clip-path: inset(0 50% 0 0);   /* top right bottom left */
+  object-position: 70% 50%;      /* was 50% 50% — higher % pushes view right */
+  z-index: 2;
+}
+
+
+/* RIGHT image: show only right half, focused on the graph */
+.hero .product-shot .ui{
+  clip-path: inset(0 0 0 50%);
+  object-position: 97% 50%;       /* 96–99% to nudge left/right */
+  transform: scale(1.14);         /* 1.10–1.22 to zoom */
+  transform-origin: center right;
+  z-index: 1;
+}
+
+
+.mission { border-top-color: #0ea5e9; }
+.apps    { border-top-color: #0ea5e9; }
+.value   { border-top-color: #0ea5e9; }
+.endcap  { border-top-color: #0ea5e9; }
+
+/* Page separator above "Tailored VNAs, Fixtures & Workflows" */
+.custom { border-top-color: #0ea5e9; }  /* <- your new color */
+
+/* Put the original thin frame back on top of the hero images */
+.hero .product-shot{ position: relative; }
+
+.hero .product-shot::after{
+  content: "";
+  position: absolute;
+  inset: 0;                               /* cover the whole frame */
+  border: 1.5px solid color-mix(in oklab, var(--text), transparent 80%);
+  border-radius: 0;                        /* keep square corners */
+  pointer-events: none;
+  z-index: 4;                              /* above .field (z:2) and .ui (z:1) */
+}
+
+/* Restore the original thin frame on the hero image */
+.hero .product-shot{
+  position: relative !important;
+  isolation: isolate;                    /* new local stacking context */
+}
+
+/* make sure the two images sit under the overlay */
+.hero .product-shot > *{
+  position: relative;
+  z-index: 0 !important;
+}
+
+/* draw your original border on top of the images */
+.hero .product-shot::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2 !important;                 /* above the child images */
+  border-radius: 0;
+  border: 1.5px solid color-mix(in oklab, var(--text), transparent 80%);
+}
+
+/* if you had a previous ::before frame, disable it */
+.hero .product-shot::before{ content: none !important; }
+
+  
+
+/* === HERO FRAME: draw original thin border on top, with fallback color === */
+.hero .product-shot{ position:relative !important; isolation:isolate !important; }
+.hero .product-shot > *{ position:relative; z-index:0 !important; }
+.hero .product-shot::before{ content:none !important; } /* keep overlay off */
+.hero .product-shot::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:5 !important;
+  border-radius:0;
+  /* Fallback first (works everywhere), then your original color-mix if supported */
+  border:1.5px solid rgba(11,19,32,.20);
+  border:1.5px solid color-mix(in oklab, var(--text), transparent 80%);
+}
+
+  
+/* === FINAL OVERRIDE: draw the original thick white frame on top === */
+.hero .product-shot{ position:relative !important; }
+.hero .product-shot::after{ content:none !important; } /* remove thin after frame */
+.hero .product-shot::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  box-sizing:border-box !important;
+  border:6px solid rgba(255,255,255,0.92) !important;  /* original look */
+  border-radius:0 !important;
+  pointer-events:none !important;
+  z-index: 1000 !important;   /* over the two images */
+}
+
+/* HERO: restore the soft underglow below the framed image */
+.hero .product-shot{
+  box-shadow:
+    0 22px 60px rgba(46,108,246,.25),  /* subtle blue glow */
+    0 8px 24px rgba(0,0,0,.10) !important;  /* soft depth */
+}
+
+/* clip the brand rail so it doesn't extend the page */
+.why{ overflow: hidden !important; }
+
+  
+/* Clean hero image: no crop rectangle, no square shadow */
+.product-shot .hero-float{ overflow: visible !important; background: transparent !important; }
+.product-shot .hero-float img{
+  clip-path: none !important;
+  filter: none !important;
+  box-shadow: none !important;
+}
+
+
+/* PERSISTENT: remove frame & original images for all slides */
+.hero-carousel .slide .product-shot,
+.hero .product-shot{
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.hero-carousel .slide .product-shot::before,
+.hero-carousel .slide .product-shot::after,
+.hero-carousel .slide .product-shot .combo::before,
+.hero-carousel .slide .product-shot .combo::after{ display:none !important; content:none !important; }
+.hero-carousel .slide .product-shot .combo{ display:none !important; }
+
+/* Slide 1 – enlarge the floating device image only */
+.hero-carousel .slide:first-child .hero-float img{
+  display:block !important;
+  width:auto;              /* don't squeeze to column width */
+  height:auto;
+  max-width:none !important;
+
+  /* make it bigger but keep layout the same */
+  transform: translateX(4%) scale(1.35);   /* tweak % / scale to taste */
+  transform-origin: center right;
+}
+
+/* (optional) if it looks cropped, allow a bit of overflow */
+.hero-carousel .slide:first-child .product-shot{
+  overflow: visible;  /* only for slide 1 */
+}
+
+/* Slide 1 — make device bigger and reposition into frame */
+.hero-carousel .slide:first-child .product-shot{ overflow:visible; }
+
+.hero-carousel .slide:first-child .hero-float img{
+  display:block !important;
+  max-width:none !important;
+  height:auto !important;
+
+  /* size */
+  width: clamp(720px, 58vw, 980px);   /* bigger without using scale */
+
+  /* position it back into view */
+  transform: translate(-10%, -6%);    /* ← move left / ↑ move up */
+  transform-origin: center right;
+}
+
+/* Tame it on small screens */
+@media (max-width: 960px){
+  .hero-carousel .slide:first-child .hero-float img{
+    width: clamp(520px, 92vw, 760px);
+    transform: translate(0, 0);
+  }
+}
+
+/* Groups.io popup — make the card narrower */
+#subOverlay .compare-modal{
+  width: min(560px, 94vw) !important;  /* tweak 560→520 for even tighter */
+}
+
+/* Slightly tighter body padding */
+#subOverlay .cm-body{ padding:14px 16px; }
+
+/* Overlapping avatar “pile” */
+#subOverlay .avatars{
+  display:flex; align-items:center; gap:0; margin:0 0 14px;
+}
+#subOverlay .avatars img{
+  width:40px; height:40px; border-radius:50%;
+  border:2px solid #fff;                 /* clean ring */
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+  margin-left:-10px;                     /* overlap amount */
+}
+#subOverlay .avatars img:first-child{ margin-left:0; }
+
+/* Initials-based avatars (overlapping “pile”) */
+#subOverlay .avatars{
+  display:flex; align-items:center; gap:0; margin:0 0 14px;
+}
+#subOverlay .avatar{
+  width:40px; height:40px; border-radius:50%;
+  background:#2E6CF6;        /* brand blue */
+  color:#fff; font-weight:700; font-size:13px;
+  display:flex; align-items:center; justify-content:center;
+  border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,.15);
+  margin-left:-10px;          /* overlap amount */
+}
+#subOverlay .avatar:first-child{ margin-left:0; }
+
+/* Overlapping initials avatars */
+#subOverlay .avatars{
+  display:flex; align-items:center; gap:0; margin:0 0 14px;
+}
+#subOverlay .avatar{
+  --bg: #2E6CF6;                       /* default fallback */
+  width:40px; height:40px; border-radius:50%;
+  background: var(--bg);
+  color:#fff; font-weight:700; font-size:13px;
+  display:flex; align-items:center; justify-content:center;
+  border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,.15);
+  margin-left:-10px;                   /* overlap */
+}
+#subOverlay .avatar:first-child{ margin-left:0; }
+
+/* Different colors per position (first 5) */
+#subOverlay .avatars .avatar:nth-child(1){ --bg:#2E6CF6; } /* brand blue */
+#subOverlay .avatars .avatar:nth-child(2){ --bg:#0ea5e9; } /* cyan */
+#subOverlay .avatars .avatar:nth-child(3){ --bg:#10b981; } /* green */
+#subOverlay .avatars .avatar:nth-child(4){ --bg:#f59e0b; } /* amber */
+#subOverlay .avatars .avatar:nth-child(5){ --bg:#ef4444; } /* red */
+
+/* The “+” bubble */
+#subOverlay .avatar.more{
+  font-weight:900;
+  background:#0b0f15;                  /* dark bubble */
+  color:#fff;
+  opacity:.9;
+}
+
+/* Monochrome brand avatars */
+#subOverlay .avatars{ display:flex; align-items:center; gap:0; margin:0 0 14px; }
+#subOverlay .avatar{
+  --bg:hsl(222 90% 54%);                 /* base mRS blue */
+  width:40px; height:40px; border-radius:50%;
+  background:var(--bg);
+  color:#fff; font-weight:700; font-size:13px;
+  display:flex; align-items:center; justify-content:center;
+  border:2px solid #fff;
+  box-shadow:0 2px 6px rgba(0,0,0,.12);
+  margin-left:-10px;
+}
+#subOverlay .avatar:first-child{ margin-left:0; }
+
+/* Subtle tints of the same blue (darker → lighter) */
+#subOverlay .avatars .avatar:nth-child(1){ --bg:hsl(220, 8%, 42%); }
+#subOverlay .avatars .avatar:nth-child(2){ --bg:hsl(180, 3%, 44%); }
+#subOverlay .avatars .avatar:nth-child(3){ --bg:hsl(220, 8%, 42%); }
+#subOverlay .avatars .avatar:nth-child(4){ --bg:hsl(180, 3%, 44%); }
+#subOverlay .avatars .avatar:nth-child(5){ --bg:hsl(220, 8%, 42%); }
+
+
+/* “+” bubble – neutral, subtle */
+#subOverlay .avatar{
+  width:36px; height:36px; font-size:12px;
+  margin-left:-8px;
+}
+
+#subOverlay .avatar.more{
+  background:#797a7a;   /* neutral grey */
+  color:#111; 
+  font-weight:700;
+}
+
+/* --- Remove the existing blue bars / rules --- */
+main > section,
+section {
+  border-top: none !important;
+  border-bottom: none !important;
+  background-image: none !important; /* in case a gradient line is used */
+}
+
+/* remove any pseudo-element lines some sections might add */
+main > section::before,
+main > section::after,
+section::before,
+section::after {
+  content: none !important;
+  background: none !important;
+  border: 0 !important;
+}
+
+/* catch common divider element names (safe to hide) */
+hr, .divider, .section-divider, .blue-divider, .rule, .section-rule, .edge, .line {
+  display: none !important;
+  height: 0 !important;
+}
+
+.brand-rail { display: none !important; }
+
+</style>
+</head>
+
+<body class="theme-light">
+  <!-- ================= HEADER ================= -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-wrap">
+      <a class="logo" href="#">
+        <img src="https://mrsinstruments.com/wp-content/uploads/2022/08/logo-mRS-Instruments-300x208.png" alt="mRS Instruments logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'">
+        <span style="display:none">mRS Instruments</span>
+      </a>
+
+      <nav class="nav" id="mainNav" aria-label="Primary">
+        <a href="#">Home</a>
+        <a href="#">About Us</a>
+        <a href="#">Products ▾</a>
+        <a href="#">Product Applications</a>
+        <a href="#">Portfolio</a>
+        <a href="#" id="contactLink">Contact</a>
+      </nav>
+
+      <div class="actions">
+        <button class="icon-btn" aria-label="Search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"></circle>
+            <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </button>
+        <a class="shop-btn" href="#">Shop Now</a>
+        <button class="hamburger" id="menuBtn" aria-label="Toggle menu" aria-expanded="false" aria-controls="mainNav">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============== HERO CAROUSEL (full-width slider) ============== -->
+  <section class="hero-carousel" id="top">
+    <button class="hc-arrow hc-prev" type="button" aria-label="Previous slide">‹</button>
+    <button class="hc-arrow hc-next" type="button" aria-label="Next slide">›</button>
+
+    <div class="track" id="heroTrack">
+      <!-- ===== Slide 1: your existing hero ===== -->
+      <section class="slide">
+        <section class="hero">
+          <!-- Sweep background -->
+          <svg class="sweep-bg" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <path id="traceGlow" fill="none" stroke="#7bd1ff" stroke-width="3" filter="url(#glow)" opacity=".85"></path>
+            <path id="trace" fill="none" stroke="#7bd1ff" stroke-width="2.2"></path>
+            <rect id="sweepbar" x="0" y="0" width="2" height="900" opacity=".08"></rect>
+          </svg>
+
+          <div class="content">
+            <div class="copy">
+              <h1>Custom RF<br>Solutions.<br>Wireless by<br>Design.</h1>
+              <p class="sub">
+                Unlike off-the-shelf analyzers, mRS Instruments lets you configure your VNA to your application —
+                and operate it wirelessly at the feedpoint with up to 100&nbsp;m Bluetooth range. For those who need
+                something ready today, we also offer proven models like the miniVNA Pro² and miniVNA Tiny.
+              </p>
+
+              <div class="cta-row">
+                <a class="btn primary" href="#demo">See Live Demo</a>
+                <a class="btn ghost" href="#mrs-why">Why We’re Different</a>
+                <a class="btn ghost" href="#products">Product Overview</a>
+              </div>
+            </div>
+
+            <div class="visual-col">
+              <div class="product-shot">
+  <div class="hero-float"><img src="img/VNA2.1.3.png" alt="miniVNA Pro² transparent"></div>
+                <div class="combo">
+                  <img class="shot field" src="/img/hero-field-1600.webp" alt="miniVNA Pro² mounted at the antenna feedpoint">
+                  <img class="shot ui" src="/img/hero-ui-1600.webp" alt="mRS Device Manager sweep trace">
+                </div>
+              </div>
+              <div class="product-caption">Class-1 Bluetooth • ~100 m range</div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- ===== Slide 2: full-bleed image banner ===== -->
+      <section class="slide hero-image">
+        <img class="bg"
+     src="/img/hero-slide2-1600.webp"
+     alt="miniVNA Pro 2 on the bench"
+     loading="lazy"
+     decoding="async">
+        <div class="content" style="z-index:1">
+          <div class="copy">
+            <h1>Measure at the Feedpoint</h1>
+            <p class="sub">Cable-free Class-1 Bluetooth (~100&nbsp;m) with clean HF/VHF baselines for confident tuning in the field.</p>
+            <div class="cta-row">
+              <a class="btn primary" href="#products">Explore Products</a>
+              <a class="btn ghost" href="#mrs-why">Why We’re Different</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- dots -->
+    <div class="hc-dots" id="heroDots" role="tablist" aria-label="Hero slides"></div>
+
+    <!-- bottom-right down arrow -->
+    <a class="hc-jump" href="#mrs-why" aria-label="Scroll to Why We’re Different">
+      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+        <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </section>
+
+  <!-- ============== WHY WE'RE DIFFERENT ============== -->
+  <section id="mrs-why" class="why">
+    <div class="why-wrap">
+      <h2 class="why-title">Why We’re Different</h2>
+      <p class="why-lead">
+        Build the VNA you need — and use it cable-free where it matters.
+        Our architecture balances flexibility, built-in tooling, and HF/VHF performance
+        that outclasses budget GHz handsets when you’re working below 230&nbsp;MHz.
+      </p>
+
+      <div class="why-cards">
+        <article class="why-card">
+          <span class="why-badge">Measure</span>
+          <h3>Measure at the Feedpoint</h3>
+          <p>Class-1 Bluetooth (approx. 100&nbsp;m) means no USB tether. Mount the VNA at the antenna,
+             walk with your laptop/tablet, and eliminate coax losses and ferrite hassle.</p>
+        </article>
+
+        <article class="why-card">
+          <span class="why-badge">DDS</span>
+          <h3>Signal Generation Inside</h3>
+          <p>Dual-channel AD9958 I/Q DDS with 0–55&nbsp;dB attenuators and 1° phase steps. Run SDR, IMD, and
+             phase experiments without extra generators or couplers.</p>
+        </article>
+
+        <article class="why-card">
+          <span class="why-badge">HF/VHF</span>
+          <h3>HF/VHF Dynamic Range</h3>
+          <p>For 0.1–230&nbsp;MHz, expect ~100&nbsp;dB S21 and ~80&nbsp;dB S11 — excellent where most work
+             is done below UHF. Clean baselines, confident tuning.</p>
+        </article>
+
+        <article class="why-card">
+          <span class="why-badge">Custom</span>
+          <h3>Custom or Ready Today</h3>
+          <p>Need a tailored module or OEM form-factor? We do that. Prefer off-the-shelf?
+             Choose a proven miniVNA Pro² or miniVNA Tiny and ship now.</p>
+        </article>
+      </div>
+
+      <div class="why-cta">
+        <a href="#contact" class="btn primary">Talk to Engineering</a>
+        <a href="#applications" class="btn ghost">Explore Applications</a>
+      </div>
+    </div>
+
+    <!-- decorative brand rail -->
+<svg class="brand-rail" aria-hidden="true" viewBox="0 0 280 300" preserveAspectRatio="xMidYMid meet">
+  <g fill="currentColor" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 288 H260 V64" fill="none"/>
+    <circle cx="260" cy="44" r="26"/>
+  </g>
+</svg>
+
+  </section>
+
+  <!-- ============== OUR MISSION ============== -->
+  <section id="mission" class="mission" aria-labelledby="mission-title">
+    <div class="mission-wrap">
+      <div class="mission-grid">
+        <div class="mission-copy">
+          <h2 id="mission-title" class="mission-title">Our Mission</h2>
+          <p class="mission-text">
+            mRS Instruments exists to bring lab-grade RF measurement to the field.
+            We build portable, customizable VNAs that let teams measure at the feedpoint,
+            iterate faster, and ship with confidence.
+          </p>
+
+          <div class="mission-points">
+            <article class="mission-point">
+              <div class="point-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></svg>
+              </div>
+              <h3>Custom by Default</h3>
+              <p>Modular hardware, OEM form factors, and open APIs tuned to your application.</p>
+            </article>
+
+            <article class="mission-point">
+              <div class="point-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18"><path d="M2 8a14 14 0 0 1 20 0M5 11a10 10 0 0 1 14 0M8 14a6 6 0 0 1 8 0M11.5 17.5h1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <h3>Field-First</h3>
+              <p>Class-1 Bluetooth (~100&nbsp;m) for cable-free measurements right at the antenna.</p>
+            </article>
+
+            <article class="mission-point">
+              <div class="point-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.5 12.5l2.2 2.2 4.8-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <h3>Honest Performance</h3>
+              <p>Below 230&nbsp;MHz: ~100&nbsp;dB S21 and ~80&nbsp;dB S11 with clean baselines and solid calibration.</p>
+            </article>
+          </div>
+        </div>
+
+        <div>
+          <!-- keep the caption as a sibling, not inside the figure -->
+<figure class="mission-visual">
+  <img src="minivna-pro-dds-800x600-400x300_c.jpg"
+       alt="AD9958 DDS on the miniVNA Pro board">
+</figure>
+<div class="media-caption">
+  <a href="#minivna-pro2" class="link-arrow">The core of our MiniVNA Pro 2</a>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== PRODUCT OVERVIEW (table) ============== -->
+  <section id="products" class="products" aria-labelledby="products-title">
+    <div class="products-wrap">
+      <h2 id="products-title" class="products-title">Product Overview</h2>
+      <p class="products-lead">Compare our portable VNAs. Click the checkboxes to build a quick comparison list.</p>
+
+      <div class="prod-table-wrap">
+        <table class="prod-table" aria-describedby="products-title">
+          <thead>
+            <tr>
+              <th class="prod-compare" scope="col">Compare</th>
+              <th scope="col">Product Name</th>
+              <th scope="col">Max. frequency</th>
+              <th scope="col">Test port output power</th>
+              <th scope="col">Port count</th>
+              <th scope="col">Instrument class</th>
+              <th scope="col">Starting at</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="prod-compare"><input type="checkbox" class="cmp"></td>
+              <td class="prod-name" data-label="Product">
+                <div class="name">
+                  <img class="prod-thumb"
+     src="img/prod-pro2-320.webp"
+     srcset="img/prod-pro2-320.webp 1x, img/prod-pro2-640.webp 2x"
+     width="64" height="42"
+     loading="lazy" decoding="async"
+     alt="MiniVNA Pro 2">
+
+
+                  <a href="#minivna-pro2" class="link" style="color:inherit;text-decoration:none;">miniVNA Pro²</a>
+                </div>
+              </td>
+              <td data-label="Max. frequency">up to ~230&nbsp;MHz</td>
+              <td data-label="Test port output power">TBD (see datasheet)</td>
+              <td data-label="Port count">2</td>
+              <td data-label="Instrument class">Portable</td>
+              <td data-label="Starting at"><a href="#contact" class="pill-link">€299</a></td>
+            </tr>
+
+            <tr>
+              <td class="prod-compare"><input type="checkbox" class="cmp"></td>
+              <td class="prod-name" data-label="Product">
+                <div class="name">
+                  <img class="prod-thumb"
+     src="img/prod-tiny-320.webp"
+     srcset="img/prod-tiny-320.webp 1x, img/prod-tiny-640.webp 2x"
+     width="64" height="42"
+     loading="lazy" decoding="async"
+     alt="MiniVNA Tiny">
+
+
+                  <a href="#minivna-tiny" class="link" style="color:inherit;text-decoration:none;">miniVNA Tiny</a>
+                </div>
+              </td>
+              <td data-label="Max. frequency">1MHz to 3GHz</td>
+              <td data-label="Test port output power">TBD</td>
+              <td data-label="Port count">2</td>
+              <td data-label="Instrument class">Portable / Economy</td>
+              <td data-label="Starting at"><a href="#contact" class="pill-link">Price on request</a></td>
+            </tr>
+
+            <tr>
+              <td class="prod-compare"><input type="checkbox" class="cmp"></td>
+              <td class="prod-name" data-label="Product">
+                <div class="name">
+                  <img class="prod-thumb"
+     src="img/prod-2-port-320.webp"
+     srcset="img/prod-2-port-320.webp 1x, img/prod-2-port-640.webp 2x"
+     width="64" height="42"
+     loading="lazy" decoding="async"
+     alt="2-Port VNA">
+
+
+                  <a href="#two-port-vna" class="link" style="color:inherit;text-decoration:none;">2-Port VNA</a>
+                </div>
+              </td>
+              <td data-label="Max. frequency">Application-dependent</td>
+              <td data-label="Test port output power">Configurable</td>
+              <td data-label="Port count">2</td>
+              <td data-label="Instrument class">Custom / OEM</td>
+              <td data-label="Starting at"><a href="#contact" class="pill-link">Price on request</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- compare bar -->
+      <div class="compare-bar" id="compareBar" hidden>
+        <span><strong id="cmpCount" class="count">0</strong> selected</span>
+        <button class="btn" id="compareBtn" type="button" aria-disabled="true">Compare products</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== APPLICATIONS ============== -->
+  <section id="applications" class="apps" aria-labelledby="apps-title">
+    <div class="apps-wrap">
+      <h2 id="apps-title" class="apps-title">Applications for VNAs</h2>
+      <p class="apps-lead">
+        From antenna tuning to production QA, vector network analyzers quantify how RF networks reflect (S-parameters) so you can
+        match, optimize, and validate quickly. Filter by context to see what fits your workflow.
+      </p>
+
+      <div class="apps-filters" role="group" aria-label="Filter applications">
+        <button class="filter-chip" data-filter="field">Field</button>
+        <button class="filter-chip" data-filter="lab">Lab</button>
+        <button class="filter-chip" data-filter="s11">S11</button>
+        <button class="filter-chip" data-filter="s21">S21</button>
+        <button class="filter-chip" data-filter="design">Design</button>
+        <button class="filter-chip" data-filter="production">Production</button>
+        <button class="filter-chip" data-filter="hfvhf">HF-VHF (&lt;=230&nbsp;MHz)</button>
+        <button class="filter-chip" data-filter="reset" class="reset">Reset</button>
+      </div>
+
+      <div class="apps-grid">
+        <article class="app-card" data-tags="field s11 hfvhf">
+          <div class="app-head">
+            <div class="app-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 5a7 7 0 0 1 7 7M5 12a7 7 0 0 1 7-7M8 12a4 4 0 0 1 4-4m4 4a4 4 0 0 1-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <h3 class="app-title">Antenna Tuning &amp; Matching</h3>
+              <div class="app-metrics"><span class="metric">S11</span><span class="metric">VSWR</span><span class="metric">Return-Loss</span></div>
+            </div>
+          </div>
+          <p class="app-text">Measure feedpoint impedance at the antenna (not the bench) to eliminate feedline effects and hit target VSWR quickly.</p>
+          <div class="app-fit">Best with: <strong>miniVNA Pro²</strong> (field), <strong>2-Port VNA</strong> (lab fixtures)</div>
+          <button class="app-more" aria-expanded="false">Details</button>
+          <div class="app-details">
+            <ul>
+              <li>Live Smith chart + markers for rapid re-tune.</li>
+              <li>HF/VHF whips, wire, small log-periodics, loops, HF mobile.</li>
+              <li>Typical: 1–230&nbsp;MHz; target RL &lt; −10&nbsp;dB (VSWR &lt; 2:1).</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="app-card" data-tags="lab s21 design hfvhf">
+          <div class="app-head">
+            <div class="app-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="7" width="18" height="4" rx="2" stroke="currentColor" fill="none" stroke-width="2"/><rect x="6" y="13" width="12" height="4" rx="2" stroke="currentColor" fill="none" stroke-width="2"/></svg>
+            </div>
+            <div>
+              <h3 class="app-title">RF Filters, Traps &amp; Duplexers</h3>
+              <div class="app-metrics"><span class="metric">S21</span><span class="metric">S11</span><span class="metric">BW/Q</span></div>
+            </div>
+          </div>
+          <p class="app-text">Characterize passband ripple, insertion loss, group delay, and return-loss. Tune notch depth and skirt steepness.</p>
+          <div class="app-fit">Best with: <strong>2-Port VNA</strong> (S21), optional fixtures</div>
+          <button class="app-more" aria-expanded="false">Details</button>
+          <div class="app-details">
+            <ul>
+              <li>Measure S21 vs frequency to find −3&nbsp;dB bandwidth and rejection.</li>
+              <li>Check matching (S11) to minimize reflections at ports.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="app-card" data-tags="field s11 production hfvhf">
+          <div class="app-head">
+            <div class="app-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 8c0-2 2-4 4-4h2v4H8a2 2 0 0 0-2 2v4M20 16c0 2-2 4-4 4h-2v-4h2a2 2 0 0 0 2-2V10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <h3 class="app-title">Cables &amp; Connectors</h3>
+              <div class="app-metrics"><span class="metric">S11</span><span class="metric">RL</span><span class="metric">Velocity-factor</span></div>
+            </div>
+          </div>
+          <p class="app-text">Verify return-loss, find damaged connectors, estimate cable length/velocity using phase slope.</p>
+          <div class="app-fit">Best with: <strong>miniVNA Pro²</strong> (field validation)</div>
+          <button class="app-more" aria-expanded="false">Details</button>
+          <div class="app-details">
+            <ul>
+              <li>Open/short/load references for quick checks.</li>
+              <li>Good for site commissioning and maintenance.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="app-card" data-tags="design lab s11 hfvhf">
+          <div class="app-head">
+            <div class="app-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18"><circle cx="8" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 12h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <h3 class="app-title">Impedance Matching Networks</h3>
+              <div class="app-metrics"><span class="metric">S11</span><span class="metric">Smith</span></div>
+            </div>
+          </div>
+          <p class="app-text">Design L/π networks for PA stages or antennas; place markers on Smith chart to hit target Γ or Z.</p>
+          <div class="app-fit">Best with: <strong>2-Port VNA</strong> (bench), <strong>miniVNA Pro²</strong> (in-situ)</div>
+          <button class="app-more" aria-expanded="false">Details</button>
+          <div class="app-details">
+            <ul>
+              <li>Synthesize values; verify real-world parasitics.</li>
+              <li>Iterate with live sweep and component swaps.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="app-card" data-tags="lab s21 design hfvhf">
+          <div class="app-head">
+            <div class="app-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M3 12h18M6 9v6M18 9v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <h3 class="app-title">Transmission Lines &amp; Baluns</h3>
+              <div class="app-metrics"><span class="metric">S21</span><span class="metric">Phase</span></div>
+            </div>
+          </div>
+          <p class="app-text">Measure loss/phase per length, check balun balance and common-mode rejection, validate coax stubs.</p>
+          <div class="app-fit">Best with: <strong>2-Port VNA</strong></div>
+          <button class="app-more" aria-expanded="false">Details</button>
+          <div class="app-details">
+            <ul>
+              <li>Derive velocity factor and effective ε<sub>r</sub>.</li>
+              <li>Plot group delay vs frequency for dispersion.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="app-card" data-tags="lab design s11 s21 hfvhf">
+          <div class="app-head">
+            <div class="app-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18"><rect x="5" y="5" width="14" height="14" rx="2" stroke="currentColor" fill="none" stroke-width="2"/><path d="M9 9h6v6H9z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <div>
+              <h3 class="app-title">SDR &amp; RF Modules Bring-up</h3>
+              <div class="app-metrics"><span class="metric">S11</span><span class="metric">S21</span><span class="metric">Phase</span></div>
+            </div>
+          </div>
+          <p class="app-text">Verify front-end filters, LNAs, and matching on dev boards; confirm reference designs before layout freeze.</p>
+          <div class="app-fit">Best with: <strong>2-Port VNA</strong></div>
+          <button class="app-more" aria-expanded="false">Details</button>
+          <div class="app-details">
+            <ul>
+              <li>Cal kits / de-embedding for accurate board-edge refs.</li>
+              <li>Sweep step size suitable for narrow filters.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="app-card" data-tags="lab design s21 hfvhf">
+          <div class="app-head">
+            <div class="app-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 3l7 4v10l-7 4-7-4V7z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <div>
+              <h3 class="app-title">Materials &amp; Ferrite Evaluation</h3>
+              <div class="app-metrics"><span class="metric">S21</span><span class="metric">Loss</span></div>
+            </div>
+          </div>
+          <p class="app-text">Compare cores, absorbers, and substrates via through-loss and phase change to choose cost-effective parts.</p>
+          <div class="app-fit">Best with: <strong>2-Port VNA</strong></div>
+          <button class="app-more" aria-expanded="false">Details</button>
+          <div class="app-details">
+            <ul>
+              <li>Fixture repeatability dominates—keep lead dress identical.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="app-card" data-tags="production lab s11 s21 hfvhf">
+          <div class="app-head">
+            <div class="app-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M20 7l-9 9-5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <h3 class="app-title">Production QA / Go-No-Go</h3>
+              <div class="app-metrics"><span class="metric">S11</span><span class="metric">S21</span><span class="metric">Limits</span></div>
+            </div>
+          </div>
+          <p class="app-text">Automate acceptance windows (limit lines) for fast screening of assemblies, cables, and tuned products.</p>
+          <div class="app-fit">Best with: <strong>2-Port VNA</strong> or <strong>miniVNA Tiny</strong> (compact rigs)</div>
+          <button class="app-more" aria-expanded="false">Details</button>
+          <div class="app-details">
+            <ul>
+              <li>CSV export / APIs integrate with SPC dashboards.</li>
+              <li>Operator prompts and fixture interlocks recommended.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+
+      <div class="apps-cta">
+        <a href="#contact" class="btn primary">Talk to Engineering</a>
+        <a href="#products" class="btn ghost">See Compatible Products</a>
+      </div>
+    </div>
+  </section>
+
+<section class="value" id="value">
+  <div class="value-wrap">
+    <div class="value-grid">
+      <!-- Left: copy + visuals -->
+      <div class="value-copy">
+        <h2 class="value-title">Unbeatable value for HF/VHF work</h2>
+        <p class="value-lead">
+          If your world is <strong>0.1–230&nbsp;MHz</strong>, the <strong>miniVNA Pro&nbsp;2</strong> hits a sweet spot:
+          cable-free <strong>Class-1 Bluetooth (~100&nbsp;m)</strong> control, an integrated
+          <strong>dual-channel I/Q DDS generator</strong> for SDR/IMD experiments, and solid HF/VHF dynamic range —
+          in a battery-powered package at a friendly price.
+        </p>
+        <p class="value-note">
+          Need above 230&nbsp;MHz? Choose <strong>miniVNA Tiny</strong> (to 3&nbsp;GHz) or a configurable
+          <strong>2-Port VNA</strong> — we’ll guide you to the right fit.
+        </p>
+
+        <div class="value-visual">
+          <!-- Product photo -->
+          <img class="vna-photo reveal"
+               src="https://mrsinstruments.com/wp-content/uploads/2025/08/Untitled-2-scaled.jpg"
+               alt="miniVNA Pro 2 on the bench">
+
+          <!-- Your screenshot of the matrix (replace src) -->
+          
+        </div>
+
+        <div class="value-cta">
+          <a class="btn primary" href="#contact">Talk to Engineering</a>
+          <a class="btn ghost" href="#products">See Product Line</a>
+        </div>
+      </div>
+
+      <!-- Right: comparison table -->
+      <div class="fit-wrap reveal" aria-label="Fit guide comparison">
+        <table class="fit" role="table">
+          <thead>
+            <tr>
+              <th class="feature">Feature</th>
+              <th class="mini-col">miniVNA Pro&nbsp;2</th>
+              <th>SV4401A (4.4&nbsp;GHz)</th>
+              <th>LiteVNA-64 (6.3&nbsp;GHz)</th>
+              <th>NanoVNA&nbsp;V2 Plus4 (4.4&nbsp;GHz)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="feature">Frequency range</td>
+              <td class="mini-col">0.1–230&nbsp;MHz <span class="badge">HF/VHF focus</span></td>
+              <td>50&nbsp;kHz–4.4&nbsp;GHz</td>
+              <td>50&nbsp;kHz–6.3&nbsp;GHz</td>
+              <td>50&nbsp;kHz–4.4&nbsp;GHz</td>
+            </tr>
+            <tr>
+              <td class="feature">2-port VNA (S11/S21)</td>
+              <td class="mini-col"><span class="i-check">✓</span></td>
+              <td><span class="i-check">✓</span></td>
+              <td><span class="i-check">✓</span></td>
+              <td><span class="i-check">✓</span></td>
+            </tr>
+            <tr>
+              <td class="feature">Dynamic range (typ.)</td>
+              <td class="mini-col">~100&nbsp;dB (S21) / ~80&nbsp;dB (S11)</td>
+              <td>~75&nbsp;dB / ~50&nbsp;dB</td>
+              <td>&gt;70&nbsp;dB (&lt;3&nbsp;GHz); &gt;50&nbsp;dB (&gt;3&nbsp;GHz)</td>
+              <td>~90&nbsp;dB @1&nbsp;GHz; ~80&nbsp;dB @3&nbsp;GHz</td>
+            </tr>
+            <tr>
+              <td class="feature">Wireless operation</td>
+              <td class="mini-col is-key">
+                <strong>Bluetooth, up to ~100&nbsp;m</strong> <span class="badge">Exclusive here</span>
+              </td>
+              <td><span class="i-x">✕</span></td>
+              <td><span class="i-x">✕</span></td>
+              <td><span class="i-x">✕</span></td>
+            </tr>
+            <tr>
+              <td class="feature">Built-in screen</td>
+              <td class="mini-col">PC / Android app</td>
+              <td>7″ touch</td>
+              <td>3.95″ touch</td>
+              <td>4″ touch</td>
+            </tr>
+            <tr>
+              <td class="feature">Dual-channel signal generator (I/Q DDS)</td>
+              <td class="mini-col is-key">
+                <strong>Yes</strong> (0–55&nbsp;dB, 1° phase) <span class="badge">Exclusive here</span>
+              </td>
+              <td><span class="i-x">✕</span></td>
+              <td><span class="i-x">✕</span></td>
+              <td><span class="i-x">✕</span></td>
+            </tr>
+            <tr>
+              <td class="feature">Battery-powered</td>
+              <td class="mini-col"><span class="i-check">✓</span> (~4&nbsp;h, Li-ion)</td>
+              <td><span class="i-check">✓</span></td>
+              <td><span class="i-check">✓</span></td>
+              <td><span class="i-check">✓</span></td>
+            </tr>
+            <tr>
+              <td class="feature">Size / portability</td>
+              <td class="mini-col">Pocket-size, very compact</td>
+              <td>190×130×30&nbsp;mm</td>
+              <td>~165×120×55&nbsp;mm</td>
+              <td>Pocket-sized</td>
+            </tr>
+            <tr>
+              <td class="feature">Approx. EU price</td>
+              <td class="mini-col"><strong>€299</strong></td>
+              <td>~€475</td>
+              <td>~€170–225</td>
+              <td>~€130–325</td>
+            </tr>
+            <tr>
+              <td class="feature">Software</td>
+              <td class="mini-col">
+                <strong>mRS Device Manager</strong> (Windows/Linux†), sweep, multi-trace, calibration, generator control
+              </td>
+              <td>Vendor PC app (varies)</td>
+              <td>Vendor PC app (varies)</td>
+              <td>Vendor PC app (varies)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="table-foot">
+          † Java 17+ required. Feature set includes sweep (S11/S21), dual-port support, generator control, multi-file
+          overlays with markers, and calibration manager. See Quick Start for details.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ========== CUSTOM SOLUTIONS (revamped) ========== -->
+<section id="custom" class="custom" aria-labelledby="custom-title">
+  <div class="custom-wrap">
+    <div class="custom-grid">
+      <!-- Left: pitch + process -->
+      <div>
+        <span class="eyebrow">Custom Solutions</span>
+        <h2 id="custom-title" class="custom-title">Tailored VNAs, Fixtures &amp; Workflows</h2>
+        <p class="custom-lead">
+          When “close enough” isn’t enough, we design to your band, dynamic range and workflow:
+          OEM modules, embedded control, field enclosures, and production test rigs—integrated with your software.
+        </p>
+
+        <ul class="custom-list">
+          <li>Frequency front-ends &amp; couplers optimized for your band.</li>
+          <li>AD/DDS chains with attenuators &amp; phase control for S-parameter &amp; experiment modes.</li>
+          <li>BLE / wired comms, open APIs, and automation hooks.</li>
+          <li>Limit-line screening, CSV/export, SPC dashboards.</li>
+          <li>Calibration strategy &amp; traceability.</li>
+        </ul>
+
+        <!-- 3-step path -->
+        <div class="process" aria-label="Typical path to a custom VNA">
+          <div class="step">
+            <div class="dot">1</div>
+            <h4>Scope</h4>
+            <p>Band, dynamic range, interfaces, and constraints.</p>
+          </div>
+          <div class="step">
+            <div class="dot">2</div>
+            <h4>Prototype</h4>
+            <p>Front-end + firmware, fixtures, and API stubs.</p>
+          </div>
+          <div class="step">
+            <div class="dot">3</div>
+            <h4>Integrate</h4>
+            <p>Automation, limit-lines, docs &amp; validation.</p>
+          </div>
+        </div>
+
+        <div class="custom-cta">
+          <a class="btn primary" href="#contact">Talk to Engineering</a>
+          <a class="btn ghost" href="#portfolio">See Custom Projects</a>
+        </div>
+      </div>
+
+      <!-- Right: feature cards -->
+      <div class="c-cards">
+        <article class="c-card">
+          <div class="c-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M3 7h18v10H3zM8 7V4h8v3" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </div>
+          <h3>OEM &amp; Embedded</h3>
+          <p>Board-level VNAs for your product or test racks with open APIs.</p>
+          <div class="c-tags"><span class="c-tag">UART/I²C</span><span class="c-tag">BLE</span><span class="c-tag">REST</span></div>
+        </article>
+
+        <article class="c-card">
+          <div class="c-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M4 6h16M6 10h12M8 14h8M10 18h4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </div>
+          <h3>Band-Targeted Front-Ends</h3>
+          <p>HF/VHF-focused dynamics and step sizes—or a band you specify.</p>
+          <div class="c-tags"><span class="c-tag">~100 dB S21</span><span class="c-tag">~80 dB S11</span><span class="c-tag">&le;230 MHz</span></div>
+        </article>
+
+        <article class="c-card">
+          <div class="c-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M5 20V7l7-4 7 4v13" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 13h6v7H9z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </div>
+          <h3>Production Fixtures</h3>
+          <p>Repeatable rigs with limit-lines, operator prompts, and exports.</p>
+          <div class="c-tags"><span class="c-tag">SPC</span><span class="c-tag">CSV</span><span class="c-tag">Safety</span></div>
+        </article>
+      </div>
+    </div>
+
+    <!-- dark CTA band -->
+    <div class="custom-band" role="complementary">
+      <div class="band-row">
+        <strong>Have a spec in mind?</strong>
+        <span style="color:#cbd5e1">Send a short brief and we’ll reply with options.</span>
+        <a class="btn primary" href="#contact">Start a Custom Quote</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- ============== COMPARE MODAL (hidden by default) ============== -->
+  <div class="modal-overlay" id="cmpOverlay" hidden aria-hidden="true">
+    <div class="compare-modal" role="dialog" aria-modal="true" aria-labelledby="cmpTitle">
+      <div class="cm-header">
+        <div class="cm-title" id="cmpTitle">Compare products</div>
+        <button class="cm-close" id="cmpClose" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="cm-body">
+        <div class="cmp-cols" id="cmpCols"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============== SCRIPTS ============== -->
+  <script>
+    // mobile menu toggle
+    const header = document.getElementById('siteHeader');
+    const menuBtn = document.getElementById('menuBtn');
+    menuBtn?.addEventListener('click', () => {
+      const open = header.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    // animated trace (slide 1 only if the nodes exist)
+    const trace     = document.getElementById('trace');
+    const traceGlow = document.getElementById('traceGlow');
+    const sweepbar  = document.getElementById('sweepbar');
+    if (trace && traceGlow && sweepbar){
+      const W=1600, H=900, BASELINE=H*0.62, N=320, XSTEP=W/(N-1);
+      const cfg={ settleDelay:4.0, settleDuration:3.0, amp:{start:70,end:12}, qMod:{start:0.35,end:0.08}, sweepPeriod:{start:5.5,end:18}, barOpacity:{start:0.10,end:0.05} };
+
+      let t=0, sweepX=0, last=performance.now(), t0=last;
+      const lerp=(a,b,u)=>a+(b-a)*u, clamp01=x=>x<0?0:x>1?1:x, easeOutCubic=x=>1-Math.pow(1-x,3);
+
+      function noise(i,tt){return(0.8*Math.sin((i*0.12)+tt*1.5)+0.5*Math.cos((i*0.07)-tt*1.1)+0.3*Math.sin((i*0.03)+tt*0.6)+0.15*Math.cos((i*0.22)-tt*2.0));}
+      function render(){
+        const now=performance.now(); const dt=(now-last)/1000; last=now;
+        const elapsed=(now-t0)/1000; const u=elapsed<cfg.settleDelay?0:clamp01((elapsed-cfg.settleDelay)/cfg.settleDuration); const s=easeOutCubic(u);
+        const amp=lerp(cfg.amp.start,cfg.amp.end,s); const qDrift=lerp(cfg.qMod.start,cfg.qMod.end,s); const period=lerp(cfg.sweepPeriod.start,cfg.sweepPeriod.end,s); const barOp=lerp(cfg.barOpacity.start,cfg.barOpacity.end,s);
+        const sweepSpeed=W/period; sweepX=(sweepX+dt*sweepSpeed)%W; sweepbar.setAttribute('x',sweepX.toFixed(2)); sweepbar.setAttribute('opacity',barOp.toFixed(3));
+        t+=dt; const qFactor=0.55+qDrift*Math.sin(t*0.6); let d=""; for(let i=0;i<N;i++){const x=i*XSTEP; const y=BASELINE-(amp*noise(i*qFactor,t)); d+=(i===0?"M":"L")+x.toFixed(2)+","+y.toFixed(2);} trace.setAttribute('d',d); traceGlow.setAttribute('d',d);
+        requestAnimationFrame(render);
+      } render();
+    }
+
+    // ----- compare selector -----
+    const cmpBoxes = document.querySelectorAll('.cmp');
+    const cmpBar   = document.getElementById('compareBar');
+    const cmpCount = document.getElementById('cmpCount');
+    const cmpBtn   = document.getElementById('compareBtn');
+
+    function updateCompare(){
+      const count = [...cmpBoxes].filter(b=>b.checked).length;
+      cmpCount.textContent = count;
+      cmpBar.hidden = count === 0;
+      cmpBtn.setAttribute('aria-disabled', (count >= 2 && count <= 3) ? 'false' : 'true');
+    }
+    cmpBoxes.forEach(b=>b.addEventListener('change', updateCompare));
+    updateCompare();
+
+    // Compare modal
+    const overlay = document.getElementById('cmpOverlay');
+    const colsBox = document.getElementById('cmpCols');
+    const closeBtn = document.getElementById('cmpClose');
+
+    function openModal(){
+      const rows = [...document.querySelectorAll('.prod-table tbody tr')].filter(r=>r.querySelector('.cmp').checked).slice(0,3);
+      if(rows.length < 2){ return; }
+
+      colsBox.innerHTML = '';
+      rows.forEach(row=>{
+        const tds = row.querySelectorAll('td');
+        const nameLink = row.querySelector('.prod-name .link');
+        const img = row.querySelector('.prod-thumb');
+        const spec = {
+          name: nameLink?.textContent?.trim() || 'Product',
+          href: nameLink?.getAttribute('href') || '#',
+          img:  img?.getAttribute('src') || '',
+          maxFreq: tds[2]?.innerHTML || '',
+          power:   tds[3]?.innerHTML || '',
+          ports:   tds[4]?.innerHTML || '',
+          cls:     tds[5]?.innerHTML || '',
+          price:   tds[6]?.textContent?.trim() || ''
+        };
+
+        const col = document.createElement('div');
+        col.className = 'cmp-card';
+        col.innerHTML = `
+          <div class="cmp-top">
+            <img src="${spec.img}" alt="">
+            <div class="cmp-name">${spec.name}</div>
+            <a class="btn" href="${spec.href}">Learn more</a>
+          </div>
+          <table class="cmp-specs" aria-label="${spec.name} specs">
+            <tbody>
+              <tr><td>Max. frequency</td><td>${spec.maxFreq}</td></tr>
+              <tr><td>Test port output power</td><td>${spec.power}</td></tr>
+              <tr><td>Port count</td><td>${spec.ports}</td></tr>
+              <tr><td>Instrument class</td><td>${spec.cls}</td></tr>
+              <tr><td>Starting at</td><td>${spec.price}</td></tr>
+            </tbody>
+          </table>
+        `;
+        colsBox.appendChild(col);
+      });
+
+      overlay.hidden = false;
+      overlay.setAttribute('aria-hidden','false');
+      document.body.classList.add('no-scroll');
+    }
+
+    function closeModal(){
+      overlay.hidden = true;
+      overlay.setAttribute('aria-hidden','true');
+      document.body.classList.remove('no-scroll');
+    }
+
+    cmpBtn.addEventListener('click', () => {
+      if (cmpBtn.getAttribute('aria-disabled') === 'true') return;
+      openModal();
+    });
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && overlay.hidden === false) closeModal(); });
+
+    // ----- Applications: filter chips -----
+    (() => {
+      const chips = Array.from(document.querySelectorAll('.filter-chip[data-filter]:not([data-filter="reset"])'));
+      const reset = document.querySelector('.filter-chip[data-filter="reset"]');
+      const cards = Array.from(document.querySelectorAll('.app-card'));
+
+      function applyFilters() {
+        const active = chips.filter(c => c.classList.contains('on')).map(c => c.dataset.filter);
+        if (active.length === 0) { cards.forEach(c => c.style.display = ''); return; }
+        cards.forEach(card => {
+          const tags = (card.dataset.tags || '').split(/\s+/);
+          const show = active.some(tag => tags.includes(tag)); // OR logic
+          card.style.display = show ? '' : 'none';
+        });
+      }
+
+      chips.forEach(chip => chip.addEventListener('click', () => {
+        chip.classList.toggle('on');
+        applyFilters();
+      }));
+
+      reset?.addEventListener('click', () => {
+        chips.forEach(c => c.classList.remove('on'));
+        applyFilters();
+      });
+    })();
+
+    // ----- Applications: expand/collapse details -----
+    document.querySelectorAll('.app-card .app-more').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.app-card');
+        const open = card.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+
+    // ===== Minimal hero carousel controller =====
+    (() => {
+      const track = document.getElementById('heroTrack');
+      if(!track) return;
+
+      const slides = Array.from(track.children);
+      const dotsBox = document.getElementById('heroDots');
+
+      let idx = 0, n = slides.length;
+
+      // build dots
+      slides.forEach((_, i) => {
+        const b = document.createElement('button');
+        b.className = 'hc-dot';
+        b.type = 'button';
+        b.setAttribute('aria-label', `Go to slide ${i+1}`);
+        b.addEventListener('click', () => go(i));
+        dotsBox.appendChild(b);
+      });
+
+      const prev = document.querySelector('.hc-prev');
+      const next = document.querySelector('.hc-next');
+
+      prev?.addEventListener('click', () => go(idx - 1));
+      next?.addEventListener('click', () => go(idx + 1));
+
+      // swipe
+      let startX = null;
+      track.addEventListener('pointerdown', e => { startX = e.clientX; track.setPointerCapture(e.pointerId); });
+      track.addEventListener('pointerup', e => {
+        if(startX === null) return;
+        const dx = e.clientX - startX;
+        startX = null;
+        if(Math.abs(dx) > 60) go(idx + (dx < 0 ? 1 : -1));
+      });
+
+      function go(i){
+        idx = (i + n) % n;
+        track.style.transform = `translateX(-${idx*100}%)`;
+        updateDots();
+      }
+
+      function updateDots(){
+        [...dotsBox.children].forEach((d, i) =>
+          d.setAttribute('aria-current', i === idx ? 'true' : 'false')
+        );
+      }
+
+      go(0);
+    })();
+  </script>
+
+  <script>
+  // Optional: highlight a column on header hover (desktop nicety)
+  (function(){
+    const table = document.querySelector('.fit');
+    if(!table) return;
+    const heads = [...table.tHead.rows[0].cells];
+    heads.forEach((th, col) => {
+      th.addEventListener('mouseenter', () => toggle(col, true));
+      th.addEventListener('mouseleave', () => toggle(col, false));
+    });
+    function toggle(col, on){
+      [...table.tBodies[0].rows].forEach(tr => {
+        const td = tr.cells[col];
+        if(td){ td.style.background = on ? 'color-mix(in oklab, var(--blue), transparent 95%)' : ''; }
+      });
+    }
+  })();
+</script>
+
+
+
+<style id="ensure-hero-float">
+/* Always show transparent PNG; hide original split image */
+.product-shot .combo{ display:none !important; }
+.product-shot{ position:relative !important; background:transparent !important; border:0 !important; box-shadow:none !important; outline:0 !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; }
+.product-shot::before, .product-shot::after, .product-shot .combo::before, .product-shot .combo::after{ display:none !important; content:none !important; }
+/* Float PNG centered in the frame */
+.product-shot .hero-float{ position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; background:transparent !important; }
+.product-shot .hero-float img{ width:min(720px, 48vw); height:auto; box-shadow:none !important; filter:none !important; clip-path:none !important; }
+@media (max-width: 900px){
+  .product-shot .hero-float img{ width:min(440px, 82vw); }
+}
+
+/* --- Professional CTA (drop-in) --- */
+:root{
+  --bg-900:#0f1318;      /* page dark */
+  --bg-800:#121821;      /* section panel */
+  --panel:#0d1219;       /* card */
+  --text-100:#e9eef6;    /* primary text */
+  --text-300:#b8c2cf;    /* secondary */
+  --line:#1f2835;        /* subtle borders */
+  --brand:#2d64ff;       /* primary blue */
+  --brand-600:#1f4de0;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+.cta-pro{
+  background: radial-gradient(1200px 500px at 80% -10%, rgba(45,100,255,.12), transparent 60%),
+              linear-gradient(180deg, var(--bg-900), var(--bg-800));
+  padding: 72px 0;
+  border-top: 1px solid var(--line);
+}
+
+.cta-pro__wrap{
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.cta-pro__head h2{
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--text-100);
+  margin: 0 0 8px;
+}
+
+.cta-pro__head p{
+  color: var(--text-300);
+  margin: 0 0 28px;
+  max-width: 56ch;
+}
+
+.cta-pro__grid{
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 28px;
+}
+
+@media (max-width: 900px){
+  .cta-pro__grid{ grid-template-columns: 1fr; }
+}
+
+/* Points list */
+.cta-pro__points{
+  margin: 0;
+  padding: 20px;
+  list-style: none;
+  background: rgba(13,18,25,.6);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  backdrop-filter: blur(2px);
+}
+
+.cta-pro__points li{
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--text-100);
+  padding: 12px 4px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+}
+.cta-pro__points li:last-child{ border-bottom: 0; }
+
+.cta-pro__points .dot{
+  width: 8px; height: 8px; margin-top: 8px;
+  border-radius: 50%;
+  background: var(--brand);
+  box-shadow: 0 0 0 3px rgba(45,100,255,.18);
+  flex: 0 0 auto;
+}
+.cta-pro__points small{ color: var(--text-300); }
+
+/* Card */
+.cta-pro__card{
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.cta-pro__card-content{
+  padding: 24px;
+}
+
+.cta-pro__card h3{
+  margin: 0 0 8px;
+  color: var(--text-100);
+  font-size: 20px;
+}
+
+.cta-pro__card p{
+  margin: 0 0 18px;
+  color: var(--text-300);
+}
+
+.cta-pro__actions{
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform .08s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+  border: 1px solid transparent;
+  will-change: transform;
+}
+
+.btn:active{ transform: translateY(1px); }
+
+.btn--primary{
+  background: var(--brand);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(45,100,255,.3);
+}
+.btn--primary:hover{ background: var(--brand-600); }
+
+.btn--ghost{
+  background: transparent;
+  color: var(--text-100);
+  border-color: var(--line);
+}
+.btn--ghost:hover{ border-color: rgba(255,255,255,.2); }
+
+/* Meta + badges */
+.cta-pro__meta{
+  margin-top: 8px;
+  color: var(--text-300);
+  font-size: 12px;
+}
+
+.cta-pro__badges{
+  margin-top: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-300);
+}
+
+.cta-pro__badges .badge{
+  padding: 8px 12px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.cta-pro__badges .sep{
+  width: 1px; height: 16px; background: var(--line);
+}
+
+
+</style>
+
+<!-- Groups.io Subscribe Popup -->
+<div class="modal-overlay" id="subOverlay" hidden aria-hidden="true">
+  <div class="compare-modal" role="dialog" aria-modal="true" aria-labelledby="subTitle">
+    <div class="cm-header">
+      <div class="cm-title" id="subTitle">Join the MiniVNA Community</div>
+      <button class="cm-close" id="subClose" aria-label="Close">✕</button>
+    </div>
+    <div class="cm-body">
+      <p style="font-size:15px; line-height:1.45; margin-bottom:16px;">
+  Join the MiniVNA community with over <strong>800+</strong> members worldwide.<br>
+  Get exclusive software updates, troubleshooting tips, and share experiences with other mRS Instruments users.
+</p>
+
+
+      <!-- community avatars preview (replace your old avatars <div>) -->
+<div class="avatars" aria-label="MiniVNA community">
+  <div class="avatar" title="6K2ECY">6K</div>
+  <div class="avatar" title="9A3KB">9A</div>
+  <div class="avatar" title="Adam 9a4qv">A9</div>
+  <div class="avatar" title="Adilson Matos">AM</div>
+  <div class="avatar" title="AF6VF">AF</div>
+</div>
+
+
+
+      <!-- groups.io form -->
+      <form action="https://groups.io/g/miniVNA/signup?u=248655461832341681" 
+            method="post" 
+            target="_blank"
+            id="groupsio-embedded-subscribe-form"
+            style="display:grid;gap:10px;">
+        
+        <input type="email" name="email" class="email" id="email"
+               placeholder="Email Address"
+               required
+               style="padding:12px 14px; border:1px solid rgba(11,19,32,.2); border-radius:6px; font-size:14px;">
+
+        <div style="position:absolute; left:-5000px;" aria-hidden="true">
+          <input type="text" name="b_248655461832341681" tabindex="-1" value="">
+        </div>
+
+        <input type="submit" value="Subscribe" name="subscribe"
+               id="groupsio-embedded-subscribe"
+               class="btn primary"
+               style="align-self:start; border-radius:6px; cursor:pointer;">
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    // ID or selector for your Contact link
+    const contactLink = document.getElementById('contactLink') 
+                      || document.querySelector('a[href*="contact"]');
+
+    const FLAG = 'mrs_show_sub_popup';
+    const STAMP = 'mrs_sub_popup_seenAt'; // reserved for future 2-day cooldown
+
+    // On any page: when "Contact" is clicked, set a flag (one-time for the next page)
+    if (contactLink) {
+      contactLink.addEventListener('click', () => {
+        sessionStorage.setItem(FLAG, '1');
+        // allow normal navigation to proceed
+      });
+    }
+
+    function openPopup(){
+      const overlay = document.getElementById('subOverlay');
+      if (!overlay) return;
+      overlay.hidden = false;
+      overlay.setAttribute('aria-hidden','false');
+      document.body.classList.add('no-scroll');
+    }
+    function closePopup(){
+      const overlay = document.getElementById('subOverlay');
+      if (!overlay) return;
+      overlay.hidden = true;
+      overlay.setAttribute('aria-hidden','true');
+      document.body.classList.remove('no-scroll');
+    }
+
+    // Wire up close behavior (in case not already bound)
+    document.addEventListener('click', (e) => {
+      if (e.target && e.target.id === 'subClose') closePopup();
+      const overlay = document.getElementById('subOverlay');
+      if (overlay && e.target === overlay) closePopup();
+    });
+    document.addEventListener('keydown', (e) => {
+      const overlay = document.getElementById('subOverlay');
+      if (e.key === 'Escape' && overlay && overlay.hidden === false) closePopup();
+    });
+
+    // On the Contact page: open if the flag is present
+    window.addEventListener('DOMContentLoaded', () => {
+      if (sessionStorage.getItem(FLAG) === '1') {
+        openPopup();
+        sessionStorage.removeItem(FLAG); // one-time
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>
