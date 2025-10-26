@@ -1504,6 +1504,115 @@ hr, .divider, .section-divider, .blue-divider, .rule, .section-rule, .edge, .lin
 
 .brand-rail { display: none !important; }
 
+
+/* ========== FOOTER ========== */
+.site-footer {
+  background: #0b0f15;
+  color: #cbd5e1;
+}
+.footer-wrap {
+  width: 100%;
+  max-width: var(--wrap-max);
+  margin: 0 auto;
+  padding: clamp(64px, 8vh, 96px) var(--page-pad);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+@media (min-width: 640px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap: 48px;
+  }
+}
+.footer-brand {
+  grid-column: span 1 / span 1;
+}
+@media (min-width: 640px) {
+  .footer-brand {
+    grid-column: span 2 / span 2;
+  }
+}
+@media (min-width: 1024px) {
+  .footer-brand {
+    grid-column: span 1 / span 1;
+  }
+}
+.footer-brand .logo {
+  color: #fff;
+  margin-bottom: 16px;
+}
+.footer-brand .logo img {
+  height: 70px;
+}
+.footer-brand p {
+  font-size: 14px;
+  color: #94a3b8;
+  line-height: 1.6;
+  max-width: 320px;
+}
+.footer-links h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.footer-links ul {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.footer-links a {
+  font-size: 14px;
+  color: #94a3b8;
+  text-decoration: none;
+  transition: color .15s ease;
+}
+.footer-links a:hover {
+  color: #fff;
+}
+.footer-bottom {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255, .1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+@media (min-width: 640px) {
+  .footer-bottom {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+.footer-bottom p {
+  font-size: 14px;
+  color: #64748b;
+  margin:0;
+}
+.socials {
+  display: flex;
+  gap: 24px;
+}
+.socials a {
+  color: #94a3b8;
+  transition: color .15s ease;
+}
+.socials a:hover {
+  color: #fff;
+}
+
 </style>
 </head>
 
@@ -2777,6 +2886,67 @@ hr, .divider, .section-divider, .blue-divider, .rule, .section-rule, .edge, .lin
     });
   })();
 </script>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="footer-wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="logo" href="#">
+          <img src="https://mrsinstruments.com/wp-content/uploads/2023/01/logo-mRS-Instruments-no-spzoo-bianco-e1750533229463.png" alt="mRS Instruments logo">
+        </a>
+        <p>
+          Bringing lab-grade RF measurement to the field. We build portable, customizable VNAs that let teams measure at the feedpoint, iterate faster, and ship with confidence.
+        </p>
+      </div>
+      <div class="footer-links">
+        <h3>Products</h3>
+        <ul>
+          <li><a href="#products">miniVNA Pro²</a></li>
+          <li><a href="#products">miniVNA Tiny</a></li>
+          <li><a href="#custom">Custom Solutions</a></li>
+          <li><a href="#">Shop Now</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3>Resources</h3>
+        <ul>
+          <li><a href="#applications">Applications</a></li>
+          <li><a href="#">Support</a></li>
+          <li><a href="#">Community</a></li>
+          <li><a href="#">Demonstration</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Portfolio</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 mRS Instruments. All rights reserved.</p>
+      <div class="socials">
+<a href="https://www.linkedin.com/company/mrs-instruments/posts/?feedView=all"
+   aria-label="LinkedIn"
+   target="_blank"
+   rel="noopener noreferrer">
+  <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
+  </svg>
+</a>
+
+        <a href="#" aria-label="YouTube">
+          <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+            <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>
